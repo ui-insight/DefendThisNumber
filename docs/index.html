@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#191919" />
-    <title>AI4RA Workshop | REACH 2026</title>
+    <title>Can You Defend This Number? | ENVS 5010 Guest Lecture</title>
     <meta
       name="description"
-      content="Workshop archive and post-workshop support hub for AI4RA: The Intersection Between AI and Data at REACH 2026."
+      content="Companion site for Barrie Robison's ENVS 5010 guest lecture: Truth, Verification, and Trust in AI-Assisted Research."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -18,18 +18,17 @@
           <div class="brand-lockup">
             <a class="brand-home" href="#top">
               <img class="brand-logo" src="img/logos/ai4ra-logo.png" alt="AI4RA logo" />
-              <span class="brand-line">AI4RA workshop companion for REACH 2026</span>
+              <span class="brand-line">AI4RA · Can You Defend This Number?</span>
             </a>
           </div>
           <nav aria-label="Primary">
             <ul class="nav-list">
               <li><a class="nav-link is-active" href="index.html">Home</a></li>
-              <li><a class="nav-link" href="presenters.html">Presenters</a></li>
-              <li><a class="nav-link" href="course-content.html">Sessions</a></li>
-              <li><a class="nav-link" href="next-steps.html">Next Steps</a></li>
-              <li><a class="nav-link" href="resources.html">Resources</a></li>
-              <li><a class="nav-link" href="at-reach.html">At REACH</a></li>
-              <li><a class="nav-link" href="https://github.com/ui-insight/REACHWorkshop2026" target="_blank" aria-label="GitHub repository"><svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.63 7.63 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
+              <li><a class="nav-link" href="#demos">Demos</a></li>
+              <li><a class="nav-link" href="slides.html">Slides</a></li>
+              <li><a class="nav-link" href="readings.html">Readings</a></li>
+              <li><a class="nav-link" href="about.html">About</a></li>
+              <li><a class="nav-link" href="https://github.com/ui-insight/DefendThisNumber" target="_blank" aria-label="GitHub repository"><svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.63 7.63 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
             </ul>
           </nav>
         </div>
@@ -39,26 +38,24 @@
         <section class="hero reveal">
           <div class="hero-panel">
             <div>
-              <p class="eyebrow">Workshop archive and follow-up</p>
-              <h1>AI4RA: The Intersection Between AI and Data</h1>
+              <p class="eyebrow">ENVS 5010 guest lecture, third in a series</p>
+              <h1>Can You Defend This Number?</h1>
               <p class="hero-copy">
-                This site now serves two jobs. You can revisit the workshop as
-                it was delivered at REACH 2026, or you can use the
-                post-workshop guides and resources to turn the material into a
-                practical pilot at your own institution.
+                Truth, verification, and trust in AI-assisted research. AI accelerates the pipeline,
+                but it does not change who is accountable for what comes out the other end.
+                If you cannot trace a claim back to its source, it is not ready to share.
               </p>
               <div class="hero-actions">
-                <a class="button" href="course-content.html">View workshop content</a>
-                <a class="button-secondary" href="next-steps.html">Get post-workshop support</a>
-                <button class="button-secondary" id="open-apikey-modal">Enable interactive activities</button>
+                <a class="button" href="#demos">See the three demos</a>
+                <a class="button-secondary" href="slides.html">Open the slides</a>
+                <a class="button-secondary" href="readings.html">Browse readings</a>
               </div>
               <p class="section-copy">
-                Start with the path that matches what you need today, then
-                cross over when you are ready.
+                A tour of three demos in twenty-five minutes. Provenance is the new literacy.
               </p>
               <p class="funding-credit" style="display:flex; align-items:center; gap:0.5rem; margin-top:9rem; font-size:0.85rem; color:var(--muted);">
                 <img src="img/logos/nsf-logos.webp" alt="National Science Foundation logo" style="height:36px;" />
-                Funded by National Science Foundation grant <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2427549" target="_blank" style="color:var(--accent);">#2427549</a>
+                Demo work draws on AI4RA, supported by NSF grant <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2427549" target="_blank" style="color:var(--accent);">#2427549</a>
               </p>
             </div>
             <div class="hero-aside">
@@ -67,255 +64,124 @@
               </article>
               <div class="stat-block">
                 <article class="stat-card">
-                  <strong>Delivered</strong>
-                  <span>April 20, 2026</span>
+                  <strong>When</strong>
+                  <span>Monday, April 27, 2026, 3:30 to 4:20 PM</span>
                 </article>
                 <article class="stat-card">
-                  <strong>Two ways in</strong>
-                  <span>Workshop content as delivered or post-workshop support</span>
+                  <strong>Where</strong>
+                  <span>CNR 10, plus Zoom, plus recording for the asynchronous cohort</span>
                 </article>
                 <article class="stat-card">
-                  <strong>Presenters</strong>
-                  <span>Barrie Robison, Nate Layman, and Nathan Wiggins</span>
+                  <strong>Course</strong>
+                  <span>ENVS 5010, AI, Research, and the Professions</span>
                 </article>
                 <article class="stat-card">
-                  <strong>Focus</strong>
-                  <span>Data organization, governance, AI literacy, and context engineering</span>
+                  <strong>Series</strong>
+                  <span>Voice (Karl), Judgment (Baumgaertner), Trust (Robison)</span>
                 </article>
               </div>
             </div>
           </div>
         </section>
 
-        <section class="content-block reveal">
-          <p class="eyebrow">Choose Your Path</p>
-          <h2 class="section-heading section-heading-wide">Use the home page as a doorway to either the delivered workshop or the follow-through work.</h2>
+        <section class="content-block reveal" id="demos">
+          <p class="eyebrow">A tour of three demos</p>
+          <h2 class="section-heading section-heading-wide">Each demo makes one point about provenance. The throughline: if you cannot trace it, do not cite it.</h2>
           <div class="path-grid">
             <article class="content-card path-card">
-              <span class="tag">Workshop content as delivered</span>
-              <h3>Revisit the modules, slides, presenters, and interactive materials</h3>
+              <span class="tag">Demo 1</span>
+              <h3>PDF extraction failure modes</h3>
               <p>
-                Use this path if you want to replay the workshop itself,
-                review the module sequence, reopen the slide decks, or revisit
-                the companion materials as attendees experienced them.
+                Push a real-looking grant document through the AI4RA OCR and extraction pipeline.
+                Find a subtle error that changes meaning. The literal "defend this number" demo.
               </p>
-              <ul class="module-points">
-                <li>Open the three workshop modules and facilitator guides.</li>
-                <li>Revisit presenter bios, session framing, and workshop resources.</li>
-                <li>Re-enable the interactive activities when you want to replay live elements.</li>
-              </ul>
+              <p><em>Point: garbage in, garbage out. Fluency is not accuracy.</em></p>
               <div class="card-actions">
-                <a class="button" href="course-content.html">Open workshop content</a>
-                <a class="button-secondary" href="resources.html">Open resources</a>
+                <a class="button" href="demo-extraction.html">Open Demo 1</a>
               </div>
             </article>
             <article class="content-card path-card">
-              <span class="tag">Post-workshop support</span>
-              <h3>Use role-based guides, pilot ideas, and resource maps to move into practice</h3>
+              <span class="tag">Demo 2</span>
+              <h3>Reproducibility and non-determinism</h3>
               <p>
-                Use this path if you want help deciding what to try next at
-                your institution, how to start small, or which tools make sense
-                for research administration, software and data teams,
-                leadership, or mixed groups.
+                The same prompt, run three times, returns three different answers.
+                Show what temperature means in practice and why this breaks the citation contract.
               </p>
-              <ul class="module-points">
-                <li>Follow role-based paths for research administration, data teams, leadership, and mixed groups.</li>
-                <li>Use the pilot ideas and 30-day roadmap to scope realistic next steps.</li>
-                <li>Find the right AI4RA resource faster instead of scanning the whole stack.</li>
-              </ul>
+              <p><em>Point: "the AI said so" is not a defensible source.</em></p>
               <div class="card-actions">
-                <a class="button" href="next-steps.html">Open post-workshop guide</a>
-                <a class="button-secondary" href="next-steps.html#roadmap">Open the 30-day plan</a>
+                <a class="button" href="demo-reproducibility.html">Open Demo 2</a>
+              </div>
+            </article>
+            <article class="content-card path-card">
+              <span class="tag">Demo 3</span>
+              <h3>End-to-end provenance trace</h3>
+              <p>
+                Take a single claim and trace it from raw data, through AI processing, to a published assertion.
+                Show where each step is defensible and where it is not.
+              </p>
+              <p><em>Point: provenance is a chain, and AI inserts links you have to vouch for.</em></p>
+              <div class="card-actions">
+                <a class="button" href="demo-provenance.html">Open Demo 3</a>
               </div>
             </article>
           </div>
         </section>
 
         <section class="content-block reveal">
-          <p class="eyebrow">Post-workshop support</p>
-          <h2 class="section-heading section-heading-wide">If you are here to act on the workshop, start with the path that fits your role.</h2>
+          <p class="eyebrow">Series context</p>
+          <h2 class="section-heading section-heading-wide">Third in a sequence. Karl on voice. Baumgaertner on judgment. Today on trust.</h2>
           <div class="compact-grid">
             <article class="content-card">
-              <span class="tag">Research administration</span>
-              <h3>Start with one workflow people already do by hand</h3>
+              <span class="tag">Karl</span>
+              <h3>Voice: Are you giving up the thing that is uniquely yours?</h3>
               <p>
-                Pilots land best when they focus on one document-heavy or
-                review-heavy task such as sponsor notices, subawards, or
-                compliance checks.
+                Considerations on the use of AI in academic writing. The opening question of the series.
               </p>
-              <div class="card-actions">
-                <a class="button" href="next-steps.html#path-ra">See the RA path</a>
-              </div>
             </article>
             <article class="content-card">
-              <span class="tag">Software and data</span>
-              <h3>Use the tools as prototypes for governed local workflows</h3>
+              <span class="tag">Baumgaertner</span>
+              <h3>Judgment: The Dark Room and the Ruthless Curiosity It Demands</h3>
               <p>
-                Data Crawler Carl, the UDM, and the lakehouse materials are a
-                better starting point than a blank-slate AI build.
+                Graduate research in the age of agentic AI. The middle question, how do you develop the judgment AI cannot give you?
               </p>
-              <div class="card-actions">
-                <a class="button" href="next-steps.html#path-data">See the data path</a>
-              </div>
             </article>
             <article class="content-card">
-              <span class="tag">Leadership</span>
-              <h3>Sponsor a small pilot with explicit guardrails</h3>
+              <span class="tag">Robison</span>
+              <h3>Trust: Can You Defend This Number?</h3>
               <p>
-                The strongest leadership move is not a broad mandate. It is
-                naming one owner, one source of truth, and one decision rule
-                for success.
+                Truth, verification, and trust in AI-assisted research. The accountability question.
               </p>
-              <div class="card-actions">
-                <a class="button" href="next-steps.html#path-leadership">See the leadership path</a>
-              </div>
             </article>
             <article class="content-card">
-              <span class="tag">Mixed teams</span>
-              <h3>Use the workshop as a shared language across roles</h3>
+              <span class="tag">Anchor text</span>
+              <h3>Yuval Harari, <em>Nexus</em>, ch. 8 to 10</h3>
               <p>
-                Cross-functional teams can replay the modules together, then
-                pick a single 30-day pilot that combines domain expertise,
-                data, and governance.
+                Networks (8), Truth (9), and The Future (10). The shared reading anchor for this trio of talks.
               </p>
-              <div class="card-actions">
-                <a class="button" href="next-steps.html#roadmap">Open the 30-day plan</a>
-              </div>
             </article>
           </div>
         </section>
 
         <section class="callout-band reveal">
           <div class="callout-panel">
-            <p class="eyebrow">After you choose support</p>
-            <h2 class="section-heading section-heading-wide">The fastest way to lose momentum is to treat every workshop idea as one project.</h2>
+            <p class="eyebrow">The takeaway</p>
+            <h2 class="section-heading section-heading-wide">Provenance is the new literacy.</h2>
             <p>
-              Pick one workflow, one source of truth, one owner, and one
-              evaluation rule. Then decide whether to automate, augment, or
-              leave it alone.
+              AI accelerates the pipeline, but it does not change who is accountable for what comes out.
+              If you cannot trace a claim back to its source, it is not ready to share. The skill grad students
+              need to build now is not whether to use AI, it is how to vouch for what AI helps you produce.
             </p>
             <div class="cta-row">
-              <a class="button" href="next-steps.html">Open the post-workshop guide</a>
-              <a class="button-secondary" href="resources.html">Go to resources</a>
+              <a class="button" href="#demos">See the demos again</a>
+              <a class="button-secondary" href="readings.html">Open readings</a>
             </div>
           </div>
         </section>
-
-        <!-- QR Fullscreen Overlay -->
-        <div id="qr-fullscreen" style="display:none; position:fixed; inset:0; z-index:9999; background:#fff; flex-direction:column; align-items:center; justify-content:flex-start; cursor:pointer; overflow-y:auto; padding:2rem 1rem; box-sizing:border-box;">
-          <p style="color:#666; font-size:clamp(0.9rem, 2vw, 1.1rem); margin:0 0 1rem;">Enable interactive activities</p>
-          <img src="img/workshop_QR_code.png" alt="QR code" style="width:min(300px, 60vw); max-width:100%; border-radius:12px;" />
-          <p style="color:var(--ink, #191919); font-size:clamp(1.8rem, 6vw, 4rem); font-weight:800; margin:1rem 0 0; letter-spacing:0.02em; text-align:center; max-width:100%; word-break:break-all;">bit.ly/4cCCUtD</p>
-          <div style="margin-top:1.5rem; background:rgba(241,179,0,0.12); border:1px solid rgba(241,179,0,0.4); border-radius:10px; padding:0.75rem 1.25rem; text-align:center; max-width:90%; box-sizing:border-box;">
-            <p style="color:#888; font-size:0.85rem; margin:0 0 0.25rem;">Conference Wi-Fi</p>
-            <p style="color:#191919; font-size:clamp(1rem, 3vw, 1.3rem); font-weight:700; margin:0; word-break:break-word;">MarriottBonvoy_Conference</p>
-            <p style="color:#444; font-size:1rem; margin:0.2rem 0 0;">Password: <strong>UKY2026</strong></p>
-          </div>
-          <p style="color:#999; font-size:0.9rem; margin:1.5rem 0 0;">Click anywhere or press Escape to close</p>
-        </div>
-
-        <!-- API Key Modal -->
-        <div id="apikey-modal" class="modal-overlay">
-          <div class="modal-dialog">
-            <h2>Gemini API Key</h2>
-            <p>Some workshop activities use Google's Gemini AI. Scan the QR code
-              or enter your key below and it will be passed automatically to interactive pages.</p>
-            <div style="text-align:center; margin:1rem 0;">
-              <img src="img/workshop_QR_code.png" alt="Scan to open the workshop site with the API key pre-filled" style="width:180px;" />
-              <p style="font-size:0.75rem; color:var(--muted); margin-top:0.25rem;">Scan to auto-fill the key</p>
-              <p style="font-size:1.3rem; font-weight:700; margin-top:0.35rem;">
-                <a href="https://bit.ly/4cCCUtD" target="_blank" rel="noopener" style="color:var(--gold);">bit.ly/4cCCUtD</a>
-              </p>
-              <button id="expand-qr-btn" class="button-secondary" style="margin-top:0.5rem; font-size:0.8rem;">Expand for audience</button>
-            </div>
-            <div class="api-key-input-row">
-              <input type="password" id="api-key-input" placeholder="Paste your Gemini API key here...">
-              <span id="api-key-status"></span>
-            </div>
-            <details style="margin-top:1rem;">
-              <summary style="cursor:pointer; color:var(--accent); font-size:0.9rem;">Don't have a key? Get one free</summary>
-              <ol style="line-height:1.8; padding-left:1.2em; margin-top:0.5rem;">
-                <li>Visit <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent);">Google AI Studio</a> and sign in with your Google account.</li>
-                <li>Click <strong>Create API Key</strong> and select a Google Cloud project (or let it create one).</li>
-                <li>Copy the generated key and paste it into the input field above.</li>
-              </ol>
-            </details>
-            <details style="margin-top:0.75rem;">
-              <summary style="cursor:pointer; color:var(--accent); font-size:0.9rem;">How is my key kept secure?</summary>
-              <ul style="line-height:1.8; padding-left:1.2em; margin-top:0.5rem; font-size:0.85rem; color:var(--muted);">
-                <li><strong>Tab-scoped storage.</strong> Your key is held in sessionStorage, which is scoped to this browser tab. It is automatically cleared when you close the tab and is never written to disk or shared across tabs.</li>
-                <li><strong>Static site.</strong> This page is served as a static file from GitHub Pages. There is no server that stores or has access to your key.</li>
-                <li><strong>HTTPS in transit.</strong> API calls to Google use HTTPS (TLS), so your key and prompts are encrypted between your browser and Google's servers.</li>
-                <li><strong>URL stripped.</strong> If the key is passed via <code>?key=</code>, it is read once and immediately removed from the address bar so it does not appear in browser history or bookmarks.</li>
-                <li><strong>Your key, your account.</strong> Each participant uses their own free-tier Gemini key. No shared credentials are stored anywhere.</li>
-              </ul>
-              <p style="font-size:0.85rem; color:var(--muted); margin-top:0.5rem;">
-                <strong>Note:</strong> As with any client-side application, your key is visible in browser developer tools while the page is open.
-                For a workshop setting with free-tier educational keys this is acceptable. Do not use a key attached to a paid production project.
-              </p>
-            </details>
-            <p style="margin-top:0.5rem; font-size:0.85rem; color:var(--muted);">
-              <strong>Facilitators:</strong> Pre-fill by sharing a link with <code>?key=YOUR_KEY</code> appended.
-            </p>
-            <button id="dismiss-apikey-modal" class="button" style="margin-top:1rem;">Done</button>
-          </div>
-        </div>
 
       </main>
 
     </div>
 
     <script type="module" src="app.js"></script>
-    <script type="module">
-      import { initAPI } from './js/gemini-api.js';
-
-      const input = document.getElementById('api-key-input');
-      const status = document.getElementById('api-key-status');
-      const modal = document.getElementById('apikey-modal');
-      const km = window.__keyManager;
-
-      // Pre-fill if key came from URL
-      const existingKey = km.getKey();
-      if (existingKey) {
-        input.value = existingKey;
-        status.textContent = 'Key loaded';
-        initAPI(existingKey);
-        document.getElementById('open-apikey-modal').textContent = 'Interactive activities enabled';
-      }
-
-      input.addEventListener('input', () => {
-        const key = input.value.trim();
-        if (key) {
-          km.setKey(key);
-          initAPI(key);
-          status.textContent = 'Key entered';
-          document.getElementById('open-apikey-modal').textContent = 'Interactive activities enabled';
-        } else {
-          status.textContent = '';
-          document.getElementById('open-apikey-modal').textContent = 'Enable interactive activities';
-        }
-      });
-
-      // Open/close modal
-      document.getElementById('open-apikey-modal').addEventListener('click', () => {
-        modal.classList.add('visible');
-      });
-      document.getElementById('dismiss-apikey-modal').addEventListener('click', () => {
-        modal.classList.remove('visible');
-      });
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('visible');
-      });
-
-      // QR fullscreen expand
-      const qrFs = document.getElementById('qr-fullscreen');
-      document.getElementById('expand-qr-btn').addEventListener('click', () => {
-        qrFs.style.display = 'flex';
-      });
-      qrFs.addEventListener('click', () => { qrFs.style.display = 'none'; });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && qrFs.style.display === 'flex') qrFs.style.display = 'none';
-      });
-    </script>
   </body>
 </html>
