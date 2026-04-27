@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#191919" />
+    <title>Accuracy, Reproducibility, and Provenance Module | AI4RA Workshop</title>
+    <meta
+      name="description"
+      content="Facilitator-ready workshop module on evaluating AI output for accuracy, reproducibility, provenance, and institutional fit for AI4RA REACH 2026."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-frame">
+      <header class="site-header">
+        <div class="shell">
+          <div class="brand-lockup">
+            <a class="brand-home" href="index.html">
+              <img class="brand-logo" src="img/logos/ai4ra-logo.png" alt="AI4RA logo" />
+              <span class="brand-line">AI4RA workshop companion for REACH 2026</span>
+            </a>
+          </div>
+          <nav aria-label="Primary">
+            <ul class="nav-list">
+              <li><a class="nav-link" href="index.html">Home</a></li>
+              <li><a class="nav-link" href="presenters.html">Presenters</a></li>
+              <li><a class="nav-link is-active" href="course-content.html">Sessions</a></li>
+              <li><a class="nav-link" href="next-steps.html">Next Steps</a></li>
+              <li><a class="nav-link" href="resources.html">Resources</a></li>
+              <li><a class="nav-link" href="at-reach.html">At REACH</a></li>
+              <li><a class="nav-link" href="https://github.com/ui-insight/REACHWorkshop2026" target="_blank" aria-label="GitHub repository"><svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.63 7.63 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section class="page-intro reveal">
+          <div class="page-intro-panel">
+            <img class="module-headshot" src="img/presenters/barrie-robison.jpg" alt="Barrie Robison" />
+            <p class="eyebrow">Module 3 - Led by Barrie Robison</p>
+            <h1>Accuracy, reproducibility, and provenance.</h1>
+            <p class="section-copy">
+              This module helps participants decide whether AI output is
+              trustworthy enough to use. The arc moves from evaluation across
+              the data lifecycle to reproducibility testing, provenance checks,
+              and the final decision about what to automate, augment, or leave
+              alone.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="course-content.html">Back to course hub</a>
+              <a class="button-secondary" href="slides-putting-it-to-work.html">Launch slide deck</a>
+              <a class="button-secondary" href="module-data-governance.html">Previous module</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="jump-strip reveal" aria-label="Module sections">
+          <div class="jump-links">
+            <a class="jump-link" href="#overview">Overview</a>
+            <a class="jump-link" href="#teaching-flow">Teaching flow</a>
+            <a class="jump-link" href="#example-practice">Example and activity</a>
+            <a class="jump-link" href="#facilitation">Facilitation</a>
+            <a class="jump-link" href="#assets">Assets</a>
+          </div>
+        </section>
+
+        <section id="overview" class="content-block reveal">
+          <p class="eyebrow">Module brief</p>
+          <h2 class="section-heading section-heading-wide">Help participants decide whether AI output can be trusted.</h2>
+          <div class="compact-grid">
+            <article class="content-card">
+              <span class="tag">Learning goal</span>
+              <h3>Evaluate output before it enters a workflow</h3>
+              <p>
+                Participants should be able to define accuracy for a task,
+                explain where reproducibility can fail, and require provenance
+                before anyone acts on AI-generated output.
+              </p>
+            </article>
+            <article class="content-card">
+              <span class="tag">In-room move</span>
+              <h3>Teach from familiar analytics and extraction tasks</h3>
+              <p>
+                Use document extraction, search, synthesis, and reporting
+                examples from the earlier sessions so evaluation feels like an
+                extension of work they already do.
+              </p>
+            </article>
+            <article class="content-card">
+              <span class="tag">Participant artifact</span>
+              <h3>An evaluation plan for one workflow</h3>
+              <p>
+                The main reusable output is a short plan naming the ground
+                truth, replication strategy, provenance requirement, and human
+                review threshold for a workflow they care about.
+              </p>
+            </article>
+            <article class="content-card">
+              <span class="tag">Derived assets</span>
+              <h3>Slide deck, Vandalizer exercises, and provenance example</h3>
+              <p>
+                The current slide deck is a condensed version of this module's
+                evaluation framing, extraction experiments, provenance
+                activity, and adoption decision framework.
+              </p>
+            </article>
+            <article class="content-card">
+              <span class="tag">Learning objectives</span>
+              <h3>What participants should leave able to do</h3>
+              <ul class="module-points">
+                <li>Measure accuracy against ground truth, schema expectations, or another authoritative source instead of trusting fluent output.</li>
+                <li>Check reproducibility by rerunning workflows and comparing outputs across controlled variations.</li>
+                <li>Require provenance and human review before high-stakes answers enter institutional workflows.</li>
+                <li>Decide what to automate, augment, or leave alone based on auditability and risk.</li>
+              </ul>
+            </article>
+          </div>
+
+          <article class="course-module module-full module-lead">
+            <span class="tag">Lecture framing</span>
+            <h3>Start with trust, not tool enthusiasm</h3>
+            <p>
+              A practical opening is to remind the audience that AI can help
+              with extraction, cleaning, search, and synthesis, but each phase
+              fails differently. The question is not whether the model can do
+              something interesting. The question is what evidence would make
+              the output trustworthy enough to use here.
+            </p>
+          </article>
+        </section>
+
+        <section id="teaching-flow" class="content-block reveal">
+          <p class="eyebrow">Core teaching arc</p>
+          <h2 class="section-heading">Move from lifecycle risk to practical trust checks.</h2>
+          <div class="module-grid">
+            <article class="course-module">
+              <span class="tag">Lifecycle framing</span>
+              <h3>Every phase has its own failure modes</h3>
+              <p>
+                Extraction can hallucinate fields, cleaning can drop valid
+                records, search can miss relevant items, and synthesis can
+                smooth over uncertainty. Trust requires evaluation moves that
+                fit the phase, not a single generic quality check.
+              </p>
+            </article>
+
+            <article class="course-module">
+              <span class="tag">Evaluation moves</span>
+              <h3>Accuracy needs a definition</h3>
+              <ul class="module-points">
+                <li>Compare outputs to known correct answers or another authoritative source.</li>
+                <li>Use sampling and automated consistency checks when scale makes full review impossible.</li>
+                <li>Match the amount of validation to the stakes of the workflow.</li>
+                <li>Teach participants to distrust confidence and look for evidence.</li>
+              </ul>
+            </article>
+
+            <article class="course-module">
+              <span class="tag">Reproducibility and guardrails</span>
+              <h3>OCR, schemas, and replication reveal instability</h3>
+              <p>
+                OCR quality sets the ceiling, data models catch structural
+                errors, structured outputs reduce format drift, and repeated
+                runs expose variability that a single successful demo hides.
+              </p>
+            </article>
+
+            <article class="course-module">
+              <span class="tag">Provenance and institutional fit</span>
+              <h3>Ask where the answer came from and whether it can be audited</h3>
+              <p>
+                Participants should expect traceability for extracted
+                requirements and use the automate, augment, or leave-alone
+                framework when auditability is missing or the stakes are high.
+              </p>
+            </article>
+          </div>
+
+          <article class="course-module module-full">
+            <span class="tag">Suggested teaching flow</span>
+            <h3>A sequence that matches the current deck</h3>
+            <ol class="module-points">
+              <li>Open with the research analytics lifecycle and ask how each phase can fail.</li>
+              <li>Define evaluation and emphasize authoritative sources rather than fluent output.</li>
+              <li>Use the Vandalizer exercise to distinguish ground-truth accuracy from replication.</li>
+              <li>Show OCR quality and schema design as upstream constraints on extraction quality.</li>
+              <li>Demonstrate multiple-pass consensus as a practical reproducibility test.</li>
+              <li>Shift to provenance with the NSF solicitation example and require source traceability.</li>
+              <li>Use a short context-for-trust setup to show what makes an analytics summary safer: reporting rules, source table, template, and human review.</li>
+              <li>Close with the final reporting exercise and then the adoption decision framework: what to automate, augment, or leave alone.</li>
+            </ol>
+          </article>
+
+          <article class="course-module module-full">
+            <span class="tag">Decision aid</span>
+            <h3>What context should do before a summary is shared</h3>
+            <ul class="module-points">
+              <li>Define the reporting period, metric rules, and scope so the model cannot invent them.</li>
+              <li>Provide the actual table, query result, or trusted source extract behind the summary request.</li>
+              <li>Use a template that separates directly supported facts from interpretation.</li>
+              <li>Keep a human review step whenever attribution, causality, anomaly explanation, or institutional judgment is involved.</li>
+              <li>If a claim cannot be traced to visible evidence, it is not ready to send.</li>
+            </ul>
+          </article>
+        </section>
+
+        <section id="example-practice" class="content-block reveal">
+          <p class="eyebrow">Example and activity</p>
+          <h2 class="section-heading section-heading-wide">Use experiments and provenance checks to make trust visible.</h2>
+          <div class="module-grid">
+            <article class="course-module">
+              <span class="tag">Worked example</span>
+              <h3>Turn Vandalizer into an evaluation lab</h3>
+              <p>
+                Rather than demoing extraction as magic, use the Vandalizer to
+                compare clean versus scanned PDFs, models, schema enforcement,
+                and repeated runs. Participants can see how accuracy changes
+                when one variable moves at a time.
+              </p>
+              <p class="module-follow">
+                This makes the session feel empirical. The tool matters less
+                than the method: define the comparison, hold the rest steady,
+                and measure what changes.
+              </p>
+            </article>
+
+            <article class="course-module">
+              <span class="tag">Institutional example</span>
+              <h3>Quarterly research metrics reporting still needs evidence</h3>
+              <ul class="module-points">
+                <li>An AI summary can sound polished while using stale numbers, mismatching fiscal years, or inventing trends.</li>
+                <li>Trusted use requires validated source systems, explicit checks against those systems, and human review for anomalies.</li>
+                <li>This is the lead-in to the final exercise: some claims are directly supported, some are interpretive, and some have no provenance at all.</li>
+              </ul>
+            </article>
+          </div>
+
+          <article class="course-module module-full">
+            <span class="tag">Hands-on exercise</span>
+            <h3>Four experiments participants can run</h3>
+            <ol class="module-points">
+              <li>Compare extraction from a clean digital PDF with a scanned version and note how OCR affects the ceiling.</li>
+              <li>Run the same task with different models and look for agreement, divergence, and failure modes.</li>
+              <li>Test structured outputs against free-form outputs and note where schemas prevent or surface errors.</li>
+              <li>Repeat the same extraction multiple times and use consensus or disagreement as a reproducibility signal.</li>
+            </ol>
+          </article>
+
+          <article class="course-module module-full">
+            <span class="tag">Provenance exercise</span>
+            <h3>Ask where the answer came from</h3>
+            <ul class="module-points">
+              <li>Use the NSF solicitation workflow to surface deadlines, eligibility rules, page limits, special conditions, and budget requirements.</li>
+              <li>Pause before extraction and ask participants what would be easy to miss or misread by hand.</li>
+              <li>After extraction, require every important field to trace back to the exact passage, page, or section that supports it.</li>
+              <li>If a value cannot be traced, treat it as unverified and not ready to drive a workflow.</li>
+            </ul>
+          </article>
+
+          <article class="course-module module-full">
+            <span class="tag">Final interactive demo</span>
+            <h3>Can you defend this number?</h3>
+            <p>
+              End with a tiny two-year research metrics table and a handful of
+              AI-generated claims. Ask the room which statements they would
+              feel safe sending to leadership without checking. The point is to
+              separate claims that are directly supported from claims that are
+              interpretive, false, or missing provenance.
+            </p>
+            <p>
+              Every figure on the table is derived from the AI4RA synthetic
+              sponsored-research corpus, so each cell traces back to a field in
+              <code>records/proposals.json</code>, <code>awards.json</code>, or
+              <code>publications.json</code>. That is the payoff: if a
+              participant presses on a number, the presenter can literally open
+              the JSON and point to the row that produced it.
+            </p>
+            <ol class="module-points">
+              <li><strong>0:00-0:30</strong> Show the mini table and frame it as a dashboard snapshot plus an AI-drafted leadership summary.</li>
+              <li><strong>0:30-1:30</strong> Read four claims aloud and ask for a quick vote on which ones are safe to send as written.</li>
+              <li><strong>1:30-3:00</strong> Reveal the answer key: two claims are directly supported, one is contradicted by the numbers, and one has no provenance.</li>
+              <li><strong>3:00-4:00</strong> Ask what additional source evidence or review would be required before approving the risky claims. Mention that the provenance-trap claim is defeated by a one-field lookup in <code>awards.json</code>.</li>
+              <li><strong>4:00-5:00</strong> Bridge to the adoption framework: supported low-stakes outputs may be automatable, checked summaries are augment, and anything without traceability belongs in leave alone.</li>
+            </ol>
+          </article>
+
+          <article class="course-module module-full">
+            <span class="tag">Discussion prompt</span>
+            <h3>Questions to ask participants</h3>
+            <ul class="module-points">
+              <li>What counts as ground truth in one of your real workflows?</li>
+              <li>Where would sampling, reruns, or automated consistency checks add confidence?</li>
+              <li>Which outputs need source traceability before staff can act on them?</li>
+              <li>Where is AI helpful as a drafting assistant, and where does auditability force human ownership?</li>
+              <li>Which tasks at your institution are best framed as automate, augment, or leave alone?</li>
+            </ul>
+          </article>
+        </section>
+
+        <section id="facilitation" class="content-block reveal">
+          <p class="eyebrow">Facilitation support</p>
+          <h2 class="section-heading">Keep the conversation anchored in evidence, not confidence.</h2>
+          <article class="course-module module-full">
+            <span class="tag">Speaker notes</span>
+            <h3>Talking points for the presenter</h3>
+            <ul class="module-points">
+              <li>Keep returning to the question: what would count as evidence that this output is right?</li>
+              <li>Emphasize that OCR quality and data-model design are upstream quality controls, not optional polish.</li>
+              <li>When participants ask which model is best, redirect to evaluation design, provenance, and auditability.</li>
+              <li>Use the bench-science analogy for replication because this audience already understands controlled variation and repeated measures.</li>
+              <li>Treat context as a supporting design choice: it helps only when it makes the resulting summary easier to verify and defend.</li>
+            </ul>
+          </article>
+
+          <article class="course-module module-full">
+            <span class="tag">REACH sessions to highlight</span>
+            <h3>Complementary sessions on Monday and Tuesday</h3>
+            <ul class="module-points">
+              <li><strong>E5</strong> - Building a Crosswalk: A Practical Framework for Standardizing Messy Research Data (Mon 3:45 PM, NEWPORT).</li>
+              <li><strong>C2</strong> - Bridging Data Silos in Academia: Smartsheet, Tableau, and Power BI as Catalysts (Mon 1:30 PM, WEATHERLY).</li>
+              <li><strong>D3</strong> - Demystifying SQL: Interpreting and Building Queries for Beginners (Mon 2:30 PM, COLUMBIA).</li>
+              <li><strong>I3</strong> - From Manual Downloading to Automated Data Collection with APIs (Tue 2:30 PM, COLUMBIA).</li>
+              <li><strong>F2</strong> - Can Prompt Engineering Turn General Questions into Actionable Research Intelligence? (Tue 10:15 AM, WEATHERLY).</li>
+              <li><strong>F1</strong> - Lessons Learned from Implementing AI Agents for Higher Ed Research Compliance (Tue 10:15 AM, FREEDOM).</li>
+            </ul>
+          </article>
+
+          <article class="course-module module-full">
+            <span class="tag">Workshop close</span>
+            <h3>Wrap-up and takeaway</h3>
+            <p>
+              This is the final session. Close by reinforcing four takeaways:
+              check accuracy against evidence, treat reproducibility as a
+              design requirement, expect provenance for high-stakes answers,
+              and use automate, augment, or leave alone only after
+              auditability is clear.
+            </p>
+          </article>
+        </section>
+
+        <section id="assets" class="content-block reveal">
+          <p class="eyebrow">Derived assets</p>
+          <h2 class="section-heading">Slides and related materials for this module</h2>
+          <article class="course-module module-full">
+            <span class="tag">Presentation asset</span>
+            <h3>Slide version of this module</h3>
+            <p>
+              A Reveal.js slide outline is available for live delivery,
+              workshop rehearsal, and follow-up refinement. It should remain a
+              condensed version of the lifecycle framing, Vandalizer
+              evaluation exercises, provenance activity, short
+              context-for-trust setup, final analytics demo, and adoption
+              decision framework documented here.
+            </p>
+            <div class="hero-actions module-actions">
+              <a class="button" href="slides-putting-it-to-work.html">Launch deck</a>
+              <a class="button-secondary" href="module-data-governance.html">Previous module</a>
+              <a class="button-secondary" href="course-content.html">All sessions</a>
+            </div>
+          </article>
+        </section>
+      </main>
+
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#191919" />
+    <title>Data Lakehouse Module | AI4RA Workshop</title>
+    <meta
+      name="description"
+      content="Facilitator quick reference for the data lakehouse and data organization module."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-frame">
+      <header class="site-header">
+        <div class="shell">
+          <div class="brand-lockup">
+            <a class="brand-home" href="index.html">
+              <img class="brand-logo" src="img/logos/ai4ra-logo.png" alt="AI4RA logo" />
+              <span class="brand-line">AI4RA workshop companion for REACH 2026</span>
+            </a>
+          </div>
+          <nav aria-label="Primary">
+            <ul class="nav-list">
+              <li><a class="nav-link" href="index.html">Home</a></li>
+              <li><a class="nav-link" href="presenters.html">Presenters</a></li>
+              <li><a class="nav-link is-active" href="course-content.html">Sessions</a></li>
+              <li><a class="nav-link" href="next-steps.html">Next Steps</a></li>
+              <li><a class="nav-link" href="resources.html">Resources</a></li>
+              <li><a class="nav-link" href="at-reach.html">At REACH</a></li>
+              <li><a class="nav-link" href="https://github.com/ui-insight/REACHWorkshop2026" target="_blank" aria-label="GitHub repository"><svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.63 7.63 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section class="page-intro reveal">
+          <div class="page-intro-panel">
+            <img class="module-headshot" src="img/presenters/nathan-layman.jpeg" alt="Nathan Layman" />
+            <p class="eyebrow">Module 2 - Led by Nathan Layman</p>
+            <h1>The data lakehouse and data organization</h1>
+            <p class="section-copy">
+              Hands-on data exploration, the Universal Data Model, and the
+              lakehouse architecture that makes AI tools work across
+              institutions.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="slides-data-lakehouse.html">Launch slide deck</a>
+              <a class="button-secondary" href="course-content.html">Back to sessions</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-block reveal">
+          <p class="eyebrow">Module brief</p>
+          <h2 class="section-heading section-heading-wide">Quick reference for the presenter</h2>
+          <div class="compact-grid">
+            <article class="content-card">
+              <span class="tag">Part 1 - 15 min</span>
+              <h3>AI-Assisted EDA</h3>
+              <p>
+                Open with a live Data Crawler Carl demo. Participants upload
+                a CSV, ask questions in plain English, and observe where the
+                AI gets it right and where it fails. Debrief surfaces data
+                quality issues: missing values, inconsistent answers, false
+                confidence.
+              </p>
+            </article>
+            <article class="content-card">
+              <span class="tag">Part 2 - 20 min</span>
+              <h3>Data Models and the UDM</h3>
+              <p>
+                The "most important model" quiz reveals that data models
+                matter more than AI models. Introduce the Universal Data Model,
+                walk through its domains and naming conventions, then show how
+                AI can serve as a universal adapter for schema mapping.
+              </p>
+            </article>
+            <article class="content-card">
+              <span class="tag">Part 3 - 15 min</span>
+              <h3>The Data Lakehouse</h3>
+              <p>
+                Compare four approaches to institutional data (warehouse, lake,
+                lakehouse, swamp). Walk through medallion layers with a worked
+                example tracing a field from raw source to application view.
+                Close with what well-organized data makes possible.
+              </p>
+            </article>
+            <article class="content-card">
+              <span class="tag">Learning objectives</span>
+              <h3>What participants should leave able to do</h3>
+              <ul class="module-points">
+                <li>Experience AI-assisted exploratory data analysis firsthand</li>
+                <li>Explain why a shared data model matters more than any AI model</li>
+                <li>Describe how the medallion architecture organizes institutional data</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-block reveal">
+          <p class="eyebrow">Facilitation</p>
+          <h2 class="section-heading section-heading-wide">Speaker notes and session close</h2>
+          <article class="course-module module-full">
+            <span class="tag">Talking points</span>
+            <h3>Key messages to reinforce</h3>
+            <ul class="module-points">
+              <li>AI will confidently analyze incomplete or messy data. A polished narrative can hide gaps that a manual review would catch.</li>
+              <li>The most important model is the data model, not the AI model. AI models change constantly, but well-organized data stays useful.</li>
+              <li>A Universal Data Model lets you build a tool once and deploy it at any institution that maps to the same schema.</li>
+              <li>The medallion architecture (Bronze, Silver, Gold, Platinum) turns raw data into governed, queryable views without losing the original.</li>
+              <li>AI can accelerate schema mapping, but humans review and approve. The UDM works with or without AI.</li>
+            </ul>
+          </article>
+
+          <article class="course-module module-full">
+            <span class="tag">Bridge forward</span>
+            <h3>Handoff to Module 3</h3>
+            <p>
+              Close by asking: "We've organized the data and built the
+              infrastructure. Now how do we know the outputs are accurate?"
+              This hands off to Module 3 on reproducibility, evaluation,
+              and putting it to work.
+            </p>
+          </article>
+        </section>
+      </main>
+
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

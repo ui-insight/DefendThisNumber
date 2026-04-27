@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f1b300" />
+    <title>Data Lakehouse and Organization | AI4RA Workshop</title>
+    <meta
+      name="description"
+      content="Slide deck: The data lakehouse and data organization. Led by Nathan Layman."
+    />
+    <link rel="stylesheet" href="reveal/dist/reveal.css" />
+    <link rel="stylesheet" href="reveal/dist/theme/white.css" />
+    <link rel="stylesheet" href="slides.css" />
+  </head>
+  <body class="slides-page">
+    <div class="slides-home">
+      <a href="course-content.html">Back to Sessions</a>
+    </div>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- 1. TITLE -->
+        <section class="title-slide" data-background-color="#f1b300">
+          <p class="slide-kicker slide-kicker-dark">AI4RA Workshop</p>
+          <h1>The data lakehouse and data organization</h1>
+          <img src="img/presenters/nathan-layman.jpeg" alt="Nathan Layman" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid #fff; margin:0.75rem auto 0;" />
+          <p class="slide-lede slide-dark">Led by Nathan Layman</p>
+        </section>
+
+        <!-- 2. MODULE PREVIEW -->
+        <section>
+          <p class="slide-kicker">Module structure</p>
+          <h2>Data Lakehouse Module Preview</h2>
+          <div class="preview-flow" role="list" aria-label="Data lakehouse module flow">
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F9EA;</p>
+              <div class="preview-content">
+                <p class="preview-part-number">Part 1</p>
+                <h6 class="preview-part-title">AI-Assisted EDA</h6>
+              </div>
+              <p class="preview-time">15 min</p>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F4CA;</p>
+              <div class="preview-content">
+                <p class="preview-part-number">Part 2</p>
+                <h6 class="preview-part-title">Data Models &amp; the UDM</h6>
+              </div>
+              <p class="preview-time">20 min</p>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F3D7;</p>
+              <div class="preview-content">
+                <p class="preview-part-number">Part 3</p>
+                <h6 class="preview-part-title">The Data Lakehouse</h6>
+              </div>
+              <p class="preview-time">15 min</p>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x2615;</p>
+              <div class="preview-content">
+                <p class="preview-part-number">&nbsp;</p>
+                <h6 class="preview-part-title">Break</h6>
+              </div>
+              <p class="preview-time">10 min</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- ACTIVITY 1: AI-ASSISTED EDA (links out to Data Crawler Carl) -->
+        <section>
+          <p class="slide-kicker">Activity 1 · AI-Assisted EDA</p>
+          <div class="slide-grid single" style="max-width:36rem; margin:1rem auto 0;">
+            <article class="slide-card accent" style="text-align:center;">
+              <h3>Let's explore a dataset together using AI-assisted analysis.</h3>
+              <p style="margin-top:0.6rem;">
+                Upload a CSV, ask questions in plain English, and see what
+                the AI gets right and what it gets wrong.
+              </p>
+              <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-top:1rem;">
+                <a href="https://ui-insight.github.io/data-crawler-carl/" target="_blank"
+                   style="display:inline-block; padding:0.5rem 1.5rem; border-radius:999px; background:var(--gold); color:var(--ink); font-weight:800; font-size:1rem; text-decoration:none; border:2px solid var(--ink);">
+                  Launch demo &rarr;
+                </a>
+                <button onclick="document.getElementById('dataset-modal').classList.add('open')"
+                   style="padding:0.5rem 1.5rem; border-radius:999px; background:#fff; color:var(--ink); font-weight:700; font-size:1rem; border:2px solid var(--ink); cursor:pointer;">
+                  Sample datasets &#x2193;
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ACTIVITY 1 DEBRIEF -->
+        <section>
+          <p class="slide-kicker">Activity 1 · Debrief</p>
+          <h2>What did you notice?</h2>
+          <div class="slide-grid">
+            <article class="slide-card" style="border-left:3px solid #ef4444;">
+              <span class="slide-label">Discussion</span>
+              <ul>
+                <li>Did the AI ever sound <strong>confident but wrong</strong>?</li>
+                <li>Were there <strong>missing values</strong> or gaps it glossed over?</li>
+                <li>Did you get different answers by <strong>rephrasing</strong> the same question?</li>
+                <li>Could you tell which results were <strong>trustworthy</strong> without checking?</li>
+                <li>If a colleague ran the same query, would they get the <strong>same answer</strong>?</li>
+              </ul>
+            </article>
+            <article class="slide-card accent">
+              <span class="slide-label">The takeaway</span>
+              <h3>AI analyzes what you give it</h3>
+              <p>AI will confidently analyze incomplete or messy data.
+                A polished narrative can hide the same gaps
+                that a manual review would catch.</p>
+              <p style="margin-top:0.5rem; font-weight:600;">This is why governed data, and reproducibility, matters.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- CLOUD vs LOCAL AI -->
+        <section>
+          <p class="slide-kicker">Where does the AI run?</p>
+          <h2>Cloud vs. locally hosted models</h2>
+          <div class="toggle-compare">
+            <div class="toggle-header">
+              <button class="toggle-btn active" data-panel="cloud">Cloud</button>
+              <button class="toggle-btn" data-panel="local">Local</button>
+              <button class="toggle-btn" data-panel="hybrid">Hybrid</button>
+            </div>
+            <div class="toggle-panel active" data-panel="cloud">
+              <p style="font-weight:600; margin:0 0 0.4rem;">Vendor-hosted (Google, OpenAI, Anthropic&hellip;)</p>
+              <ul>
+                <li>Access to the largest, most capable models</li>
+                <li>No hardware to buy or maintain</li>
+                <li>Pay per use, scales up and down</li>
+              </ul>
+              <div class="slide-callout">
+                <strong>Security:</strong> Data leaves your network. Requires enterprise data agreements,
+                BAAs, or similar contracts. Some data (FERPA, HIPAA, export-controlled)
+                may not be allowed to leave your infrastructure at all.
+              </div>
+            </div>
+            <div class="toggle-panel" data-panel="local">
+              <p style="font-weight:600; margin:0 0 0.4rem;">Self-hosted (Llama, GPT-oss, Qwen&hellip;)</p>
+              <ul>
+                <li>Data never leaves your infrastructure</li>
+                <li>Full control over the model and its environment</li>
+                <li>Fixed cost with hardware investment up front</li>
+                <li>Tools like <strong>Ollama</strong> and <strong>vLLM</strong> make local deployment accessible</li>
+              </ul>
+              <div class="slide-callout">
+                <strong>Security:</strong> Data stays local, but requires security expertise,
+                infrastructure, and compute resources.
+              </div>
+            </div>
+            <div class="toggle-panel" data-panel="hybrid">
+              <p style="font-weight:600; margin:0 0 0.4rem;">Cloud for most work, local for sensitive data</p>
+              <ul>
+                <li>Use cloud AI for general tasks and high throughput</li>
+                <li>Small teams run desktop servers (NVIDIA DGX Spark, Mac Mini) for restricted data</li>
+                <li>Not built for heavy workloads, but keeps critical data on-site</li>
+              </ul>
+              <div class="slide-callout" style="border-left-color:#f1b300;">
+                <strong>Challenge:</strong> Governance complexity. You need clear policies about which
+                models are approved for which data sources, and who enforces that.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- THE MODEL BEHIND THE DEMO -->
+        <section>
+          <p class="slide-kicker">The model behind the demo</p>
+          <h2>Gemini 2.5 Flash</h2>
+          <div class="slide-grid single" style="max-width:40rem; margin:0.8rem auto 0;">
+            <article class="slide-card accent" style="text-align:left;">
+              <p>The demo used Google's <strong>Gemini 2.5 Flash</strong>, a cloud-hosted large language model (LLM).
+                Remember Nathan's earlier explanation: LLMs predict the next token based on patterns
+                in their training data. No understanding, no memory. Just very capable pattern matching.</p>
+              <p style="margin-top:0.5rem;">That's how it could read your column names, understand your question in plain English,
+                and write working SQL in response, all without being explicitly programmed for your dataset.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 2. QUIZ: What is the most important model? -->
+        <section>
+          <p class="slide-kicker">There are a lot of AI models, but</p>
+          <h1>Which is the most important one?</h1>
+          <div class="quiz-options" id="quiz-model" style="margin-top:1rem;">
+            <label class="quiz-option">
+              <span class="quiz-letter">A</span>
+              <span class="quiz-text">Large Language Model</span>
+              <span class="quiz-desc">A neural network trained on massive text corpora to predict and generate human-like language.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">B</span>
+              <span class="quiz-text">Generative Pre-trained Transformer</span>
+              <span class="quiz-desc">The architecture behind GPT. Uses self-attention to process sequences and generate text token by token.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">C</span>
+              <span class="quiz-text">Convolutional Neural Network (CNN)</span>
+              <span class="quiz-desc">Specialized for image and spatial data. Uses filters to detect patterns like edges, shapes, and objects in images.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">D</span>
+              <span class="quiz-text">Generative Adversarial Network (GAN)</span>
+              <span class="quiz-desc">Two neural networks compete. One generates fakes, the other detects them, producing increasingly realistic synthetic data.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">E</span>
+              <span class="quiz-text">Diffusion Model (DALL-E, Stable Diffusion)</span>
+              <span class="quiz-desc">Learns to generate images by gradually removing noise. The engine behind modern AI image and video generation.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">F</span>
+              <span class="quiz-text">Recurrent Neural Network (RNN/LSTM)</span>
+              <span class="quiz-desc">Processes sequences by maintaining memory of previous inputs. Used for time series, early language models, and speech recognition.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">G</span>
+              <span class="quiz-text">BERT / Encoder Model</span>
+              <span class="quiz-desc">Reads text bidirectionally to understand meaning and context. Used for classifying text, not generating it.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">H</span>
+              <span class="quiz-text">Reinforcement Learning (RL)</span>
+              <span class="quiz-desc">Learns by trial and error with rewards. Powers game-playing AI like AlphaGo and robotic control systems.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">I</span>
+              <span class="quiz-text">Random Forest / Decision Tree</span>
+              <span class="quiz-desc">Classic machine learning. Builds decision rules from data features. Very common in research for classification and prediction.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">J</span>
+              <span class="quiz-text">Support Vector Machine (SVM)</span>
+              <span class="quiz-desc">Finds the optimal boundary between categories in data. A traditional classification workhorse in science and engineering.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">K</span>
+              <span class="quiz-text">Variational Autoencoder (VAE)</span>
+              <span class="quiz-desc">Compresses data into a compact representation and generates new samples from it. Used in drug discovery and anomaly detection.</span>
+            </label>
+            <label class="quiz-option">
+              <span class="quiz-letter">L</span>
+              <span class="quiz-text">Graph Neural Network (GNN)</span>
+              <span class="quiz-desc">Learns from relationships between entities. Used for social networks, molecular structures, and knowledge graphs.</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- 3. WRONG! Your data model -->
+        <section>
+          <p class="slide-kicker">&nbsp;</p>
+          <h1 style="color:#ef4444; font-size:5rem;">Wrong!</h1>
+          <div class="slide-split">
+            <div class="split-img">
+              <img src="img/diagrams/data-model.png" alt="Data model diagram" />
+            </div>
+            <div class="split-text">
+              <p class="slide-quote" style="margin-top:0;">The most important model is <strong>your data model.</strong></p>
+              <p style="margin-top:0.6rem; font-size:1rem; color:var(--muted);">
+                AI models come and go, but the way an institution organizes, governs,
+                and shares its data determines whether any of them are useful.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. WHAT IS A DATA MODEL? (NEW) -->
+        <section>
+          <p class="slide-kicker">Foundations</p>
+          <h2>What is a data model?</h2>
+          <div class="slide-grid">
+            <article class="slide-card">
+              <span class="slide-label">Definition</span>
+              <h3>The blueprint for how your institution stores information</h3>
+              <p>
+                A data model defines the tables, columns, relationships, and rules
+                that describe your data. It is the difference between a filing cabinet
+                with labeled folders and a pile of papers on the floor.
+              </p>
+            </article>
+            <article class="slide-card accent">
+              <span class="slide-label">What you already have</span>
+              <h3>Your systems already have data models</h3>
+              <ul>
+                <li>Your post-award system has one</li>
+                <li>Your ERP has another</li>
+                <li>Your HR system has a third</li>
+                <li>They all describe the same things differently</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- 4. WHAT IS A UDM? -->
+        <section>
+          <p class="slide-kicker">Shared standards</p>
+          <h2>What is a Universal Data Model?</h2>
+          <div class="slide-grid">
+            <article class="slide-card accent">
+              <span class="slide-label">Definition</span>
+              <h3>A shared data standard across institutions</h3>
+              <p>
+                A UDM is a data model that is shared across institutions. It defines
+                a common set of tables and columns so that every institution can
+                translate its own data into one shared language.
+              </p>
+            </article>
+            <article class="slide-card">
+              <span class="slide-label">Sound familiar?</span>
+              <h3>Every institution speaks a different data language</h3>
+              <p>
+                Your post-award system calls it <code>AGENCY_NAME</code>. Your ERP
+                calls it <code>VENDOR_DESC</code>. Your spreadsheet calls it "Sponsor."
+                Every system stores the same concept differently, and every integration
+                has to reconcile them from scratch.
+              </p>
+              <p class="slide-micro">A UDM gives every institution one shared language so tools, reports, and AI workflows work the same everywhere.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 4b. THE AI4RA UDM — domains and scope -->
+        <section>
+          <p class="slide-kicker">Shared standards</p>
+          <h2>The AI4RA Universal Data Model</h2>
+          <table style="width:100%; font-size:0.7rem; border-collapse:collapse; margin-top:0.6rem;">
+            <thead>
+              <tr style="text-align:left; border-bottom:2px solid var(--gold);">
+                <th style="padding:0.3rem 0.5rem; color:var(--muted); font-weight:600;">Domain</th>
+                <th style="padding:0.3rem 0.5rem; color:var(--muted); font-weight:600;">Tables</th>
+              </tr>
+            </thead>
+            <tbody style="color:var(--ink);">
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Reference</td><td style="padding:0.25rem 0.5rem;">Organization, AllowedValues, BudgetCategory</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Core</td><td style="padding:0.25rem 0.5rem;">Personnel, ContactDetails, Project</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Pre-Award</td><td style="padding:0.25rem 0.5rem;">RFA, RFARequirement, Proposal, ProposalBudget</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Post-Award</td><td style="padding:0.25rem 0.5rem;">Award, Modification, Terms, Subaward, CostShare, and more</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Financial</td><td style="padding:0.25rem 0.5rem;">Fund, Account, FinanceCode, Transaction, IndirectRate, Invoice</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Personnel &amp; Effort</td><td style="padding:0.25rem 0.5rem;">ProjectRole, Effort</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Compliance</td><td style="padding:0.25rem 0.5rem;">ComplianceRequirement, ConflictOfInterest</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Operations</td><td style="padding:0.25rem 0.5rem;">ApplicationSystem, ServiceRequest</td></tr>
+              <tr style="border-bottom:1px solid #eee;"><td style="padding:0.25rem 0.5rem; font-weight:600;">Faculty Dev</td><td style="padding:0.25rem 0.5rem;">ProjectCohort, CohortParticipation</td></tr>
+              <tr><td style="padding:0.25rem 0.5rem; font-weight:600;">System</td><td style="padding:0.25rem 0.5rem;">Document, ActivityLog</td></tr>
+            </tbody>
+          </table>
+          <p class="slide-note">40 tables, 100 relationships. Build an app on the UDM once and any institution that maps their data to it can use that app immediately.</p>
+        </section>
+
+        <!-- 4c. ONTOLOGY — predictable naming conventions -->
+        <section>
+          <p class="slide-kicker">Shared standards</p>
+          <h2>A predictable, self-describing schema</h2>
+          <div class="slide-grid">
+            <article class="slide-card">
+              <span class="slide-label">Naming conventions</span>
+              <ul>
+                <li><strong>Tables:</strong> PascalCase e.g. <code>ProjectRole</code>, <code>AwardBudgetPeriod</code></li>
+                <li><strong>Columns:</strong> Snake_Case e.g. <code>Award_Number</code>, <code>Start_Date</code></li>
+                <li><strong>Primary keys:</strong> <code>TableName_ID</code> e.g. <code>Award_ID</code>, <code>Personnel_ID</code></li>
+                <li><strong>Foreign keys:</strong> Named by role e.g. <code>Sponsor_Organization_ID</code>, not just <code>Organization_ID</code></li>
+                <li><strong>Booleans:</strong> <code>Is_</code> prefix e.g. <code>Is_Active</code>, <code>Is_Primary</code></li>
+              </ul>
+            </article>
+            <article class="slide-card accent">
+              <span class="slide-label">Why this matters</span>
+              <h3>AI and humans can read the schema</h3>
+              <p>
+                Consistent naming means an AI model can infer meaning from column names alone.
+                A developer at a new institution can read the schema without documentation.
+                Every adapter follows the same patterns.
+              </p>
+              <p class="slide-micro">
+                Browse the full model at
+                <a href="https://ui-insight.github.io/AI4RA-UDM/" target="_blank" style="color:var(--gold);">ui-insight.github.io/AI4RA-UDM</a>
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 5. THE STANDARDS PROBLEM -->
+        <section>
+          <p class="slide-kicker">Shared standards</p>
+          <h2>The standards proliferation problem</h2>
+          <div style="text-align:center; margin-top:1rem;">
+            <img src="img/diagrams/xkcd-standards.png" alt="XKCD 927: Standards" style="max-height:400px;">
+            <p style="font-size:0.55rem; color:var(--muted); margin-top:0.3rem;">xkcd.com/927 — CC BY-NC 2.5</p>
+          </div>
+        </section>
+
+        <!-- 6. AI AS A UNIVERSAL ADAPTER (NEW) -->
+        <section>
+          <p class="slide-kicker">AI + Data</p>
+          <h2>AI makes the UDM practical</h2>
+          <div class="slide-split">
+            <div class="split-img">
+              <img src="img/diagrams/universal_converter_box.png" alt="Universal converter box" />
+            </div>
+            <div class="split-text">
+              <p>
+                The hardest part of adopting a shared schema is the translation work.
+                AI changes that equation. It can read a source schema and the UDM, then
+                propose the mapping automatically.
+              </p>
+              <ul style="font-size:0.8rem; margin-top:0.5rem;">
+                <li>Map each source once instead of building integrations from scratch</li>
+                <li>AI suggests the mapping; humans review and approve</li>
+                <li>Build tools once and deploy them at every institution</li>
+                <li>Every adapter works without AI too. It is a bonus, not a requirement.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- TRANSITION: from data model to infrastructure -->
+        <section>
+          <p class="slide-kicker">Next question</p>
+          <h1>Now how do we handle all that data?</h1>
+          <p class="slide-lede" style="margin-top:1rem;">
+            We have a shared data model. Now we need a place to put it.
+          </p>
+        </section>
+
+        <!-- 7. FOUR APPROACHES TO INSTITUTIONAL DATA -->
+        <section>
+          <p class="slide-kicker">Infrastructure</p>
+          <h2>Four approaches to institutional data</h2>
+          <div class="toggle-compare">
+            <div class="toggle-header">
+              <button class="toggle-btn active" data-panel="warehouse">Warehouse</button>
+              <button class="toggle-btn" data-panel="lake">Data Lake</button>
+              <button class="toggle-btn" data-panel="lakehouse">Lakehouse</button>
+              <button class="toggle-btn" data-panel="swamp">Data Swamp</button>
+            </div>
+            <div class="toggle-panel active" data-panel="warehouse">
+              <ul>
+                <li><strong>Structured, governed, fast queries</strong></li>
+                <li>Pre-defined schemas enforce data quality</li>
+                <li>Great for reporting dashboards and compliance queries</li>
+                <li>Rigid schemas are expensive and slow to change</li>
+                <li>Cannot handle unstructured data (PDFs, images, JSON)</li>
+              </ul>
+              <div class="slide-callout">Best for: stable reporting needs with predictable schemas.</div>
+            </div>
+            <div class="toggle-panel" data-panel="lake">
+              <ul>
+                <li><strong>Flexible raw storage, any format, cheap</strong></li>
+                <li>Store everything first, decide structure later</li>
+                <li>Great for archiving raw files and ML training data</li>
+                <li>No schema enforcement or query optimization</li>
+                <li>Without governance, becomes a "data swamp"</li>
+              </ul>
+              <div class="slide-callout">Supports structured, semi-structured, and unstructured data natively.</div>
+            </div>
+            <div class="toggle-panel" data-panel="lakehouse">
+              <ul>
+                <li><strong>Flexible storage + structured governance layers on top</strong></li>
+                <li>Open table formats (Iceberg) enable ACID transactions and schema evolution</li>
+                <li>Medallion architecture transforms raw data into governed views</li>
+                <li>Separation of storage and compute keeps costs down</li>
+                <li>Works for structured, semi-structured, and unstructured data</li>
+              </ul>
+              <div class="slide-callout">The architecture the GRANTED project chose for university research data.</div>
+            </div>
+            <div class="toggle-panel" data-panel="swamp">
+              <ul>
+                <li><strong>What happens when a data lake loses governance</strong></li>
+                <li>Data gets dumped in with no schema, no ownership, no documentation</li>
+                <li>Nobody knows what's in there, how old it is, or whether to trust it</li>
+                <li>Queries return results, but nobody can verify if they're correct</li>
+                <li>Every new project starts by re-discovering and re-cleaning the same data</li>
+              </ul>
+              <div class="slide-callout" style="border-left-color:#ef4444; background:rgba(239,68,68,0.08);">This is the default outcome without deliberate governance. Most institutions are here.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. CAPABILITIES OF A DATA LAKEHOUSE -->
+        <section>
+          <p class="slide-kicker">Why a lakehouse</p>
+          <h2>Capabilities of a data lakehouse</h2>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.4rem; margin-top:0.6rem; font-size:0.65rem;">
+            <article class="slide-card"><h3>Trust &amp; Governance</h3><p>Who changed what, when, and why?</p></article>
+            <article class="slide-card"><h3>Data Quality</h3><p>Schemas enforced, anomalies detected, freshness monitored.</p></article>
+            <article class="slide-card"><h3>Reliability</h3><p>Failover, backup, point-in-time recovery.</p></article>
+            <article class="slide-card"><h3>Scalability</h3><p>Storage and compute scale independently.</p></article>
+            <article class="slide-card"><h3>Openness</h3><p>Open formats, interchangeable engines, no lock-in.</p></article>
+            <article class="slide-card"><h3>Multi-Modal</h3><p>Structured, semi-structured, and unstructured in one platform.</p></article>
+            <article class="slide-card"><h3>Simplicity</h3><p>A small team can operate it without dedicated platform engineers.</p></article>
+            <article class="slide-card"><h3>Cost Efficiency</h3><p>No redundant copies, compute scales to actual workload.</p></article>
+          </div>
+        </section>
+
+        <!-- ARCHITECTURE OVERVIEW — live D3 from Shipyard dashboard -->
+        <section>
+          <p class="slide-kicker">Architecture</p>
+          <h2>The GRANTED data lakehouse</h2>
+          <div id="arch-diagram" style="margin:0 auto;"></div>
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:0.3rem;">
+            <span style="font-size:0.55rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.05em">Data Flow</span>
+            <span style="display:inline-flex;align-items:center;gap:0.25rem;font-size:0.55rem;color:#64748b"><span style="display:inline-block;width:14px;height:2px;background:#CD7F32;border-radius:1px"></span>Bronze</span>
+            <span style="display:inline-flex;align-items:center;gap:0.25rem;font-size:0.55rem;color:#64748b"><span style="display:inline-block;width:14px;height:2px;background:#8E8E93;border-radius:1px"></span>Silver</span>
+            <span style="display:inline-flex;align-items:center;gap:0.25rem;font-size:0.55rem;color:#64748b"><span style="display:inline-block;width:14px;height:2px;background:#8b5cf6;border-radius:1px"></span>Platinum</span>
+            <span style="display:inline-flex;align-items:center;gap:0.25rem;font-size:0.55rem;color:#64748b"><span style="display:inline-block;width:14px;height:2px;background:#06b6d4;border-radius:1px"></span>Live</span>
+            <span style="display:inline-flex;align-items:center;gap:0.25rem;font-size:0.55rem;color:#64748b"><span style="display:inline-block;width:14px;height:2px;background:#f97316;border-radius:1px"></span>Writeback</span>
+          </div>
+        </section>
+
+        <!-- 12. OPEN TECHNOLOGY -->
+        <section>
+          <p class="slide-kicker">Infrastructure</p>
+          <h2>Open technology, interchangeable parts</h2>
+          <div class="slide-grid">
+            <article class="slide-card">
+              <span class="slide-label">Technology choices</span>
+              <h3>Every layer is replaceable</h3>
+              <ul>
+                <li><strong>Ingestion:</strong> Airbyte, Fivetran, custom scripts, or our own sync engine</li>
+                <li><strong>Storage:</strong> MinIO, AWS S3, PostgreSQL, or Snowflake</li>
+                <li><strong>Query:</strong> Trino, DuckDB, Spark, or Dremio</li>
+                <li><strong>Applications:</strong> Tableau, Power BI, LLM agents, or custom apps</li>
+              </ul>
+              <p class="slide-micro">Open table formats (Apache Iceberg) mean no vendor lock-in. Swap any component without rewriting the stack.</p>
+            </article>
+            <article class="slide-card accent">
+              <span class="slide-label">Implementation patterns</span>
+              <h3>Two paths to a governed data layer</h3>
+              <ul>
+                <li><strong>Medallion (recommended):</strong> Full Bronze &rarr; Silver &rarr; Gold &rarr; Platinum pipeline. Best for multi-source, multi-institution use cases.</li>
+                <li><strong>Direct database:</strong> Connect existing databases and map tables directly to UDM views. Faster to start, but harder to govern at scale.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- THE MEDALLION LAYERS -->
+        <section>
+          <p class="slide-kicker">Architecture</p>
+          <h2>The medallion layers</h2>
+          <!-- Horizontal flow diagram -->
+          <div style="display:flex; align-items:center; justify-content:center; gap:0; margin:0.8rem auto 0.6rem; max-width:52rem;">
+            <div style="text-align:center; flex:1;">
+              <div style="background:#8B6914; color:#fff; padding:0.4rem 0.6rem; border-radius:8px; font-weight:700; font-size:0.8rem;">Bronze</div>
+              <p style="font-size:0.6rem; color:var(--muted); margin-top:0.3rem;">Raw data, exactly as received. No transformation.</p>
+            </div>
+            <span style="font-size:1.2rem; color:#94a3b8; margin:0 0.2rem;">&#x2192;</span>
+            <div style="text-align:center; flex:1;">
+              <div style="background:#9CA3AF; color:#fff; padding:0.4rem 0.6rem; border-radius:8px; font-weight:700; font-size:0.8rem;">Silver</div>
+              <p style="font-size:0.6rem; color:var(--muted); margin-top:0.3rem;">Per-source mapping to UDM schema. One view per source per table.</p>
+            </div>
+            <span style="font-size:1.2rem; color:#94a3b8; margin:0 0.2rem;">&#x2192;</span>
+            <div style="text-align:center; flex:1;">
+              <div style="background:#D4A017; color:#fff; padding:0.4rem 0.6rem; border-radius:8px; font-weight:700; font-size:0.8rem;">Gold</div>
+              <p style="font-size:0.6rem; color:var(--muted); margin-top:0.3rem;">Unified UDM tables. UNION ALL across Silver, deduped by primary key.</p>
+            </div>
+            <span style="font-size:1.2rem; color:#94a3b8; margin:0 0.2rem;">&#x2192;</span>
+            <div style="text-align:center; flex:1;">
+              <div style="background:#7C8B9A; color:#fff; padding:0.4rem 0.6rem; border-radius:8px; font-weight:700; font-size:0.8rem;">Platinum</div>
+              <p style="font-size:0.6rem; color:var(--muted); margin-top:0.3rem;">App-specific views. Joins, aggregations, access control.</p>
+            </div>
+          </div>
+          <!-- Layer detail cards -->
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.4rem; font-size:0.6rem;">
+            <article class="slide-card" style="border-top:3px solid #8B6914;">
+              <p><strong>Store everything.</strong> Retain raw files, soft deletes, and metadata. The audit trail starts here.</p>
+            </article>
+            <article class="slide-card" style="border-top:3px solid #9CA3AF;">
+              <p><strong>Translate once per source.</strong> AI or human maps each column to the UDM. No business logic, only standardization.</p>
+            </article>
+            <article class="slide-card" style="border-top:3px solid #D4A017;">
+              <p><strong>One truth.</strong> If two sources provide the same entity, priority rules pick the winner. Auto-generated by the platform.</p>
+            </article>
+            <article class="slide-card" style="border-top:3px solid #7C8B9A;">
+              <p><strong>Purpose-built.</strong> Each app gets exactly the view it needs. Dashboards, AI agents, and APIs all read from here.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 13. FOLLOWING DATA THROUGH THE LAYERS -->
+        <section>
+          <p class="slide-kicker">Worked example</p>
+          <h2>Following data through the layers</h2>
+          <p style="font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem;">Tracing VERAS <code>AGENCY_TYPE</code> from source to application.</p>
+          <div class="slide-grid tight">
+            <article class="slide-card" style="border-left: 3px solid #8B6914;">
+              <span class="slide-label">Bronze</span>
+              <p><code>AGENCY_TYPE = 'Federal'</code><br />Raw, exactly as received from the VERAS API. No transformation.</p>
+            </article>
+            <article class="slide-card" style="border-left: 3px solid #9CA3AF;">
+              <span class="slide-label">Silver</span>
+              <p><code>Organization_Type = 'Sponsor'</code><br />CASE WHEN maps 'Federal' to UDM enum 'Sponsor'. Column renamed to UDM standard.</p>
+            </article>
+            <article class="slide-card" style="border-left: 3px solid #D4A017;">
+              <span class="slide-label">Gold</span>
+              <p>Same value, now part of <code>Gold.UDM.Organization</code>. If Banner also provides this org, dedup picks the higher-priority source.</p>
+            </article>
+            <article class="slide-card" style="border-left: 3px solid #7C8B9A;">
+              <span class="slide-label">Platinum</span>
+              <p>Joined with Award data: "All active awards from Federal sponsors." Flat, access-controlled, ready for a dashboard or AI workflow.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 14. WHAT WELL-ORGANIZED DATA LETS YOU DO (NEW) -->
+        <section>
+          <p class="slide-kicker">The payoff</p>
+          <h2>What well-organized data lets you do</h2>
+          <div class="slide-grid">
+            <article class="slide-card accent">
+              <span class="slide-label">With governed data</span>
+              <ul>
+                <li>Ask the same question at any institution and get a comparable answer</li>
+                <li>Build AI workflows that cite their sources and can be audited</li>
+                <li>Generate reproducible reports that match across departments</li>
+                <li>Automate routine tasks with confidence in the underlying data</li>
+              </ul>
+            </article>
+            <article class="slide-card dark">
+              <span class="slide-label">Without it</span>
+              <ul>
+                <li>AI blends contradictory sources into confident-sounding wrong answers</li>
+                <li>Every new report requires a new integration from scratch</li>
+                <li>Nobody knows which spreadsheet is current or authoritative</li>
+                <li>Automation multiplies errors instead of eliminating them</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- END OF MODULE -->
+        <section data-background-color="#f1b300">
+          <p class="slide-kicker slide-kicker-dark">End of module</p>
+          <h2 class="slide-dark">Back to Sessions</h2>
+          <p class="slide-dark">
+            <a href="course-content.html" style="color:var(--ink); text-decoration:underline;">Return to session list</a>
+          </p>
+        </section>
+      </div>
+    </div>
+
+    <!-- DATASET DOWNLOAD MODAL -->
+    <div id="dataset-modal" onclick="if(event.target===this)this.classList.remove('open')">
+      <div class="dataset-modal-content">
+        <button class="dataset-modal-close" onclick="document.getElementById('dataset-modal').classList.remove('open')" aria-label="Close">&times;</button>
+        <h3>Sample datasets for Data Crawler Carl</h3>
+        <p style="font-size:0.8rem; color:var(--muted); margin:0.25rem 0 1rem;">Download a CSV and upload it to the demo. These are synthetic research administration records.</p>
+        <div class="dataset-cards">
+          <a class="dataset-card" href="files/synthetic_proposals.csv" download="synthetic_proposals.csv">
+            <span class="dataset-icon" aria-hidden="true">&#x1F4DD;</span>
+            <div>
+              <strong>Proposals</strong>
+              <p>18 synthetic proposal records with sponsors, budgets, compliance flags, and team info.</p>
+            </div>
+          </a>
+          <a class="dataset-card" href="files/synthetic_awards.csv" download="synthetic_awards.csv">
+            <span class="dataset-icon" aria-hidden="true">&#x1F3C6;</span>
+            <div>
+              <strong>Awards</strong>
+              <p>8 award records with budget periods, transactions, F&amp;A rates, and cost sharing terms.</p>
+            </div>
+          </a>
+          <a class="dataset-card" href="files/synthetic_publications.csv" download="synthetic_publications.csv">
+            <span class="dataset-icon" aria-hidden="true">&#x1F4DA;</span>
+            <div>
+              <strong>Publications</strong>
+              <p>39 publication records with authors, journals, keywords, and linked award IDs.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <style>
+      #dataset-modal {
+        display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7);
+        z-index:9999; align-items:center; justify-content:center; padding:2rem;
+      }
+      #dataset-modal.open { display:flex; }
+      .dataset-modal-content {
+        background:#fff; border-radius:0.75rem; max-width:38rem; width:100%;
+        padding:1.5rem 1.75rem; position:relative;
+        box-shadow:0 20px 60px rgba(0,0,0,0.3);
+      }
+      .dataset-modal-content h3 { margin:0 0 0.25rem; font-size:1.15rem; }
+      .dataset-modal-close {
+        position:absolute; top:0.5rem; right:0.75rem; background:transparent;
+        border:none; font-size:1.75rem; cursor:pointer; color:#555; padding:0.25rem 0.5rem;
+      }
+      .dataset-modal-close:hover { color:#d71920; }
+      .dataset-cards { display:flex; flex-direction:column; gap:0.6rem; }
+      .dataset-card {
+        display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1rem;
+        border:1px solid rgba(25,25,25,0.12); border-radius:0.5rem;
+        text-decoration:none; color:var(--ink);
+        transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      }
+      .dataset-card:hover {
+        transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1);
+        border-color:var(--gold);
+      }
+      .dataset-card strong { display:block; font-size:0.95rem; }
+      .dataset-card p { font-size:0.75rem; color:var(--muted); margin:0.15rem 0 0; }
+      .dataset-icon { font-size:1.6rem; flex-shrink:0; }
+    </style>
+
+    <script type="module">
+      import { readKeyFromURL, installLinkInterceptor } from './js/key-manager.js';
+      readKeyFromURL();
+      installLinkInterceptor();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="reveal/dist/reveal.js"></script>
+    <script src="slides-interactive.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        controls: true,
+        progress: true,
+        center: true,
+        slideNumber: true,
+        transition: "slide"
+      });
+
+      /* Close dataset modal on Escape */
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') document.getElementById('dataset-modal').classList.remove('open');
+      });
+
+      /* Quiz interaction */
+      (function () {
+        document.querySelectorAll('.quiz-options').forEach(function (quiz) {
+          quiz.querySelectorAll('.quiz-option').forEach(function (opt) {
+            opt.addEventListener('click', function () {
+              var wasSelected = opt.classList.contains('selected');
+              quiz.querySelectorAll('.quiz-option').forEach(function (o) {
+                o.classList.remove('selected');
+              });
+              if (!wasSelected) opt.classList.add('selected');
+            });
+          });
+        });
+      })();
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script>
+    /* Architecture diagram — adapted from Shipyard dashboard.html */
+    (function() {
+      var el = document.getElementById('arch-diagram');
+      if (!el) return;
+
+      var W = 920, H = 380;
+      var nodes = [
+        { id: "sources", label: "Data Sources", sub: "External Systems",
+          fill: "#f8fafc", stroke: "#94a3b8", color: "#475569",
+          x: 55, y: 165, w: 110, h: 54 },
+        { id: "adapters", label: "Adapters", sub: "Schema Translators",
+          fill: "#eef2ff", stroke: "#6366f1", color: "#312e81",
+          x: 225, y: 165, w: 120, h: 54 },
+        { id: "harbor", label: "Lakehouse", sub: "Storage & Compute",
+          fill: "#fef9e7", stroke: "#FFD700", color: "#7c6800",
+          x: 405, y: 143, w: 150, h: 98 },
+        { id: "marina", label: "API Gateway", sub: "Access Control",
+          fill: "#ecfdf5", stroke: "#10b981", color: "#064e3b",
+          x: 625, y: 165, w: 110, h: 54 },
+        { id: "apps", label: "Apps", sub: "Consumers",
+          fill: "#f8fafc", stroke: "#94a3b8", color: "#475569",
+          x: 800, y: 165, w: 80, h: 54 },
+        { id: "shipyard", label: "Admin Portal", sub: "Config & Sync",
+          fill: "#f0f9ff", stroke: "#0ea5e9", color: "#0c4a6e",
+          x: 370, y: 30, w: 120, h: 44 },
+        { id: "udm", label: "Shared Schema", sub: "Universal Model",
+          fill: "#fffbeb", stroke: "#d97706", color: "#78350f",
+          x: 140, y: 310, w: 115, h: 38 },
+        { id: "bridge", label: "Live Translator", sub: "In-Memory",
+          fill: "#ecfeff", stroke: "#06b6d4", color: "#164e63",
+          x: 380, y: 310, w: 130, h: 42 }
+      ];
+
+      var nm = {};
+      nodes.forEach(function(n) { nm[n.id] = n; });
+
+      var links = [
+        { source: "sources", target: "adapters", type: "bronze" },
+        { source: "sources", target: "adapters", type: "live" },
+        { source: "adapters", target: "harbor", type: "silver" },
+        { source: "harbor", target: "marina", type: "platinum" },
+        { source: "marina", target: "apps", type: "platinum" },
+        { source: "udm", target: "adapters", type: "schema" },
+        { source: "adapters", target: "bridge", type: "bypass" },
+        { source: "bridge", target: "marina", type: "bypass" },
+        { source: "marina", target: "apps", type: "bypass" },
+        { source: "shipyard", target: "sources", type: "admin" },
+        { source: "shipyard", target: "adapters", type: "admin" },
+        { source: "shipyard", target: "apps", type: "admin" },
+        { source: "apps", target: "marina", type: "writeback" },
+        { source: "marina", target: "harbor", type: "writeback" }
+      ];
+
+      var svg = d3.select(el).append("svg")
+        .attr("viewBox", "0 0 " + W + " " + H)
+        .style("width", "100%").style("height", "auto").style("overflow", "visible");
+
+      var defs = svg.append("defs");
+
+      function mkMarker(id, col) {
+        defs.append("marker").attr("id", "arch-" + id)
+          .attr("viewBox", "0 0 10 10").attr("refX", 9).attr("refY", 5)
+          .attr("markerWidth", 7).attr("markerHeight", 7).attr("orient", "auto-start-reverse")
+          .append("path").attr("d", "M0 0L10 5L0 10z").attr("fill", col);
+      }
+      mkMarker("ai", "#8b5cf6");
+      mkMarker("ao", "#f97316");
+      mkMarker("ab", "#06b6d4");
+      mkMarker("abr", "#CD7F32");
+      mkMarker("as", "#8E8E93");
+
+      var pf = defs.append("filter").attr("id", "arch-pkt")
+        .attr("x", "-100%").attr("y", "-100%").attr("width", "300%").attr("height", "300%");
+      pf.append("feGaussianBlur").attr("in", "SourceGraphic").attr("stdDeviation", "3").attr("result", "b1");
+      pf.append("feGaussianBlur").attr("in", "SourceGraphic").attr("stdDeviation", "1").attr("result", "b2");
+      var pm = pf.append("feMerge");
+      pm.append("feMergeNode").attr("in", "b1");
+      pm.append("feMergeNode").attr("in", "b2");
+      pm.append("feMergeNode").attr("in", "SourceGraphic");
+
+      var sf = defs.append("filter").attr("id", "arch-sh")
+        .attr("x", "-20%").attr("y", "-20%").attr("width", "140%").attr("height", "140%");
+      sf.append("feDropShadow").attr("dx", 0).attr("dy", 1).attr("stdDeviation", 2).attr("flood-opacity", 0.06);
+
+      function lp(d) {
+        var s = nm[d.source], t = nm[d.target];
+        if (d.type === "bronze") {
+          var off = -8;
+          var x0 = s.x + s.w, y0 = s.y + s.h / 2 + off,
+              x1 = t.x, y1 = t.y + t.h / 2 + off, mx = (x0 + x1) / 2;
+          return "M" + x0 + "," + y0 + " C" + mx + "," + y0 + " " + mx + "," + y1 + " " + x1 + "," + y1;
+        }
+        if (d.type === "live") {
+          var off = 8;
+          var x0 = s.x + s.w, y0 = s.y + s.h / 2 + off,
+              x1 = t.x, y1 = t.y + t.h / 2 + off, mx = (x0 + x1) / 2;
+          return "M" + x0 + "," + y0 + " C" + mx + "," + y0 + " " + mx + "," + y1 + " " + x1 + "," + y1;
+        }
+        if (d.type === "silver" || d.type === "platinum") {
+          var x0 = s.x + s.w, y0 = s.y + s.h / 2,
+              x1 = t.x, y1 = t.y + t.h / 2, mx = (x0 + x1) / 2;
+          return "M" + x0 + "," + y0 + " C" + mx + "," + y0 + " " + mx + "," + y1 + " " + x1 + "," + y1;
+        }
+        if (d.type === "schema") {
+          var x0 = s.x + s.w / 2, y0 = s.y,
+              x1 = t.x + t.w / 2, y1 = t.y + t.h, my = (y0 + y1) / 2;
+          return "M" + x0 + "," + y0 + " C" + x0 + "," + my + " " + x1 + "," + my + " " + x1 + "," + y1;
+        }
+        if (d.type === "bypass") {
+          if (d.source === "adapters") {
+            var x0 = s.x + s.w / 2, y0 = s.y + s.h,
+                x1 = t.x, y1 = t.y + t.h / 2;
+            return "M" + x0 + "," + y0 + " C" + x0 + "," + (y0 + 55) + " " + (x1 - 20) + "," + y1 + " " + x1 + "," + y1;
+          }
+          if (d.source === "marina") {
+            var off = 12;
+            var x0 = s.x + s.w, y0 = s.y + s.h / 2 + off,
+                x1 = t.x, y1 = t.y + t.h / 2 + off, mx = (x0 + x1) / 2;
+            return "M" + x0 + "," + y0 + " C" + mx + "," + y0 + " " + mx + "," + y1 + " " + x1 + "," + y1;
+          }
+          var x0 = s.x + s.w, y0 = s.y + s.h / 2,
+              x1 = t.x + t.w / 2, y1 = t.y + t.h;
+          return "M" + x0 + "," + y0 + " C" + (x0 + 50) + "," + y0 + " " + x1 + "," + (y1 + 50) + " " + x1 + "," + y1;
+        }
+        if (d.type === "writeback") {
+          var off = -12;
+          var x0 = s.x, y0 = s.y + s.h / 2 + off,
+              x1 = t.x + t.w, y1 = t.y + t.h / 2 + off, mx = (x0 + x1) / 2;
+          return "M" + x0 + "," + y0 + " C" + mx + "," + y0 + " " + mx + "," + y1 + " " + x1 + "," + y1;
+        }
+        if (d.type === "admin") {
+          var x0 = s.x + s.w / 2, y0 = s.y + s.h,
+              x1 = t.x + t.w / 2, y1 = t.y, my = (y0 + y1) / 2;
+          return "M" + x0 + "," + y0 + " C" + x0 + "," + my + " " + x1 + "," + my + " " + x1 + "," + y1;
+        }
+        return "";
+      }
+
+      var isData = function(t) { return t === "bronze" || t === "live" || t === "silver" || t === "platinum" || t === "writeback" || t === "bypass"; };
+
+      var linkEls = svg.selectAll(".link").data(links).join("path")
+        .attr("d", lp).attr("fill", "none")
+        .attr("stroke", function(d) {
+          if (d.type === "bronze") return "#CD7F32";
+          if (d.type === "silver" || d.type === "bypass") return "#8E8E93";
+          if (d.type === "platinum") return "#8b5cf6";
+          if (d.type === "live") return "#06b6d4";
+          if (d.type === "writeback") return "#f97316";
+          if (d.type === "admin") return "#0ea5e9";
+          if (d.type === "schema") return "#d97706";
+          return "#94a3b8";
+        })
+        .attr("stroke-width", function(d) { return isData(d.type) ? 1.5 : 1; })
+        .attr("stroke-dasharray", function(d) { return isData(d.type) ? null : "6 4"; })
+        .attr("opacity", function(d) { return d.type === "admin" ? 0.4 : d.type === "schema" ? 0.5 : 0.35; })
+        .attr("pointer-events", "none")
+        .attr("marker-end", function(d) {
+          if (d.type === "bronze") return "url(#arch-abr)";
+          if (d.type === "silver") return "url(#arch-as)";
+          if (d.type === "platinum") return "url(#arch-ai)";
+          if (d.type === "live") return "url(#arch-ab)";
+          if (d.type === "bypass") return "url(#arch-as)";
+          if (d.type === "writeback") return "url(#arch-ao)";
+          return null;
+        });
+
+      /* Animated data packets */
+      var packetLayer = svg.append("g").attr("pointer-events", "none");
+      linkEls.each(function(d) {
+        if (!isData(d.type)) return;
+        var pathNode = this;
+        var pathLen = pathNode.getTotalLength();
+        var col = d.type === "writeback" ? "#f97316" :
+                  d.type === "live" ? "#06b6d4" :
+                  d.type === "bypass" ? "#8E8E93" :
+                  d.type === "bronze" ? "#CD7F32" :
+                  d.type === "silver" ? "#8E8E93" : "#8b5cf6";
+        var coreFill = d.type === "writeback" ? "#fff7ed" :
+                       d.type === "live" ? "#ecfeff" :
+                       d.type === "bypass" ? "#f0f0f0" :
+                       d.type === "bronze" ? "#f5e6d0" :
+                       d.type === "silver" ? "#f0f0f0" : "#ede9fe";
+        var dur = Math.max(2500, pathLen * 12);
+        var interval = dur / 3;
+
+        function spawnPacket() {
+          var g = packetLayer.append("g").style("filter", "url(#arch-pkt)");
+          g.append("circle").attr("r", 3).attr("fill", col).attr("opacity", 0.3);
+          g.append("circle").attr("r", 1.5).attr("fill", coreFill);
+          g.transition().duration(dur).ease(d3.easeLinear)
+            .attrTween("transform", function() {
+              return function(t) {
+                var p = pathNode.getPointAtLength(t * pathLen);
+                return "translate(" + p.x + "," + p.y + ")";
+              };
+            })
+            .on("end", function() { d3.select(this).remove(); });
+        }
+        for (var k = 0; k < 3; k++) setTimeout(spawnPacket, k * interval);
+        d3.interval(spawnPacket, interval);
+      });
+
+      /* Draw nodes */
+      var ff = "ui-sans-serif,system-ui,sans-serif";
+      var ng = svg.selectAll(".node").data(nodes).join("g")
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+      ng.append("rect")
+        .attr("width", function(d) { return d.w; })
+        .attr("height", function(d) { return d.h; })
+        .attr("rx", 10)
+        .attr("fill", function(d) { return d.fill; })
+        .attr("stroke", function(d) { return d.stroke; })
+        .attr("stroke-width", 1.5)
+        .attr("filter", "url(#arch-sh)");
+
+      ng.append("text")
+        .attr("x", function(d) { return d.w / 2; })
+        .attr("y", function(d) { return d.sub ? d.h / 2 - 5 : d.h / 2; })
+        .attr("text-anchor", "middle").attr("dominant-baseline", "central")
+        .attr("fill", function(d) { return d.color; })
+        .attr("font-size", 12).attr("font-weight", 600).attr("font-family", ff)
+        .text(function(d) { return d.label; });
+
+      ng.filter(function(d) { return d.sub; }).append("text")
+        .attr("x", function(d) { return d.w / 2; })
+        .attr("y", function(d) { return d.h / 2 + 10; })
+        .attr("text-anchor", "middle").attr("dominant-baseline", "central")
+        .attr("fill", function(d) { return d.color; })
+        .attr("font-size", 9).attr("opacity", 0.6).attr("font-family", ff)
+        .text(function(d) { return d.sub; });
+    })();
+    </script>
+  </body>
+</html>

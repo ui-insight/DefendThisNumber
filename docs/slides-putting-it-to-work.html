@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f1b300" />
+    <title>Output We Can Trust | AI4RA Workshop</title>
+    <meta
+      name="description"
+      content="Slide deck: Output we can trust — evaluation strategies for accuracy and reproducibility. Led by Barrie Robison."
+    />
+    <link rel="stylesheet" href="reveal/dist/reveal.css" />
+    <link rel="stylesheet" href="reveal/dist/theme/white.css" />
+    <link rel="stylesheet" href="slides.css" />
+  </head>
+  <body class="slides-page">
+    <div class="slides-home">
+      <a href="course-content.html">Back to Sessions</a>
+    </div>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- TITLE -->
+        <section class="title-slide" data-background-color="#f1b300">
+          <p class="slide-kicker slide-kicker-dark">AI4RA Workshop</p>
+          <h1>Output we can trust: evaluation strategies for accuracy and reproducibility</h1>
+          <div id="barrie-egg" style="width:120px; height:120px; margin:0.75rem auto 0; cursor:pointer; position:relative;" onclick="(function(el){
+            var img = el.querySelector('img');
+            var vid = el.querySelector('video');
+            if (vid.style.display === 'none') {
+              img.style.display = 'none';
+              vid.style.display = 'block';
+              vid.play();
+              el.style.animation = 'eggSpin 0.4s ease-out';
+            } else {
+              vid.pause();
+              vid.currentTime = 0;
+              vid.style.display = 'none';
+              img.style.display = 'block';
+              el.style.animation = 'none';
+            }
+            setTimeout(function(){ el.style.animation = 'none'; }, 400);
+          })(this)">
+            <img src="img/presenters/barrie-robison.jpg" alt="Barrie Robison" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid #fff;" />
+            <video src="img/presenters/demon-barrie.mp4" loop muted playsinline style="display:none; width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid #fff;"></video>
+          </div>
+          <style>
+            @keyframes eggSpin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+            #barrie-egg:hover img { filter: brightness(1.1); transition: filter 0.2s; }
+
+            .slide-grid:has(.lifecycle-card) {
+              align-items: stretch;
+            }
+            .lifecycle-card {
+              cursor: pointer;
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .lifecycle-card .card-front,
+            .lifecycle-card .card-back {
+              min-height: 7rem;
+            }
+            .lifecycle-card .card-back p {
+              font-size: 0.75rem;
+              line-height: 1.42;
+            }
+            .lifecycle-card:hover {
+              box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            }
+            .lifecycle-card .card-front { display: block; }
+            .lifecycle-card .card-back { display: none; }
+            .lifecycle-card.flipped {
+              animation: cardFlip 0.5s ease;
+            }
+            .lifecycle-card.flipped .card-front { display: none; }
+            .lifecycle-card.flipped .card-back { display: block; }
+            .lifecycle-card.unflipped {
+              animation: cardUnflip 0.5s ease;
+            }
+            @keyframes cardFlip {
+              0% { transform: rotateY(0deg) scale(1); }
+              50% { transform: rotateY(90deg) scale(1.05); }
+              100% { transform: rotateY(0deg) scale(1); }
+            }
+            @keyframes cardUnflip {
+              0% { transform: rotateY(0deg) scale(1); }
+              50% { transform: rotateY(-90deg) scale(1.05); }
+              100% { transform: rotateY(0deg) scale(1); }
+            }
+          </style>
+          <p class="slide-lede slide-dark">Led by Barrie Robison</p>
+        </section>
+
+        <!-- AI ACROSS THE DATA LIFECYCLE -->
+        <section>
+          <h2>AI across the data lifecycle</h2>
+          <p class="slide-note">AI can add value at every phase of the research analytics pipeline — but each phase has different accuracy risks and verification needs.</p>
+          <div class="slide-grid">
+            <article class="slide-card accent lifecycle-card" onclick="(function(el){
+              if (el.classList.contains('flipped')) {
+                el.classList.remove('flipped');
+                el.classList.add('unflipped');
+              } else {
+                el.classList.remove('unflipped');
+                el.classList.add('flipped');
+              }
+            })(this)">
+              <div class="card-front">
+                <span class="slide-label">Creation & extraction</span>
+                <p style="font-size:0.75rem;">OCR, document parsing, structured extraction from PDFs. Turning unstructured documents into data.</p>
+                <p style="font-size:0.65rem; opacity:0.7; margin-top:0.25rem; font-style:italic;">Click to connect to Session 1</p>
+              </div>
+              <div class="card-back" style="font-size:0.75rem;">
+                <span class="slide-label">Creation & extraction</span>
+                <p style="margin:0.25rem 0;">In <a href="slides-ai-literacy.html#/10" target="_blank" style="color:#1a73e8; text-decoration:underline;">Session 1</a>, we used Vandalizer to extract structured data from a research document.</p>
+                <p style="margin:0.25rem 0;">It felt easy — but <em>how do we know the extracted data were correct?</em></p>
+                <p style="margin:0.25rem 0; opacity:0.8;">That question is the starting point for everything in this session.</p>
+              </div>
+            </article>
+            <article class="slide-card accent lifecycle-card" onclick="(function(el){
+              if (el.classList.contains('flipped')) {
+                el.classList.remove('flipped');
+                el.classList.add('unflipped');
+              } else {
+                el.classList.remove('unflipped');
+                el.classList.add('flipped');
+              }
+            })(this)">
+              <div class="card-front">
+                <span class="slide-label">Cleaning & janitorial work</span>
+                <p style="font-size:0.75rem;">Deduplication, normalization, schema validation, fixing messy records. Making data consistent and trustworthy.</p>
+                <p style="font-size:0.65rem; opacity:0.7; margin-top:0.25rem; font-style:italic;">Click to connect to Session 2</p>
+              </div>
+              <div class="card-back" style="font-size:0.75rem;">
+                <span class="slide-label">Cleaning & janitorial work</span>
+                <p style="margin:0.25rem 0;">In <a href="slides-data-lakehouse.html#/7" target="_blank" style="color:#1a73e8; text-decoration:underline;">Session 2</a>, we explored the Unified Data Model — a shared schema that standardizes messy institutional data.</p>
+                <p style="margin:0.25rem 0;">The UDM defines what <em>clean</em> looks like. But how do we verify that AI-assisted mapping and normalization got it right?</p>
+              </div>
+            </article>
+            <article class="slide-card accent lifecycle-card" onclick="(function(el){
+              if (el.classList.contains('flipped')) {
+                el.classList.remove('flipped');
+                el.classList.add('unflipped');
+              } else {
+                el.classList.remove('unflipped');
+                el.classList.add('flipped');
+              }
+            })(this)">
+              <div class="card-front">
+                <span class="slide-label">Searching & selecting</span>
+                <p style="font-size:0.75rem;">Natural language filtering, semantic search, embeddings, RAG. Finding what you need without writing queries.</p>
+                <p style="font-size:0.65rem; opacity:0.7; margin-top:0.25rem; font-style:italic;">Click to connect to Session 2</p>
+              </div>
+              <div class="card-back" style="font-size:0.75rem;">
+                <span class="slide-label">Searching & selecting</span>
+                <p style="margin:0.25rem 0;">In <a href="slides-data-lakehouse.html#/1" target="_blank" style="color:#1a73e8; text-decoration:underline;">Session 2</a>, we used Data Crawler Carl to search and filter research data using natural language.</p>
+                <p style="margin:0.25rem 0;">It found results fast — but <em>did it find the right ones? Did it miss anything?</em></p>
+              </div>
+            </article>
+            <article class="slide-card accent lifecycle-card" onclick="(function(el){
+              if (el.classList.contains('flipped')) {
+                el.classList.remove('flipped');
+                el.classList.add('unflipped');
+              } else {
+                el.classList.remove('unflipped');
+                el.classList.add('flipped');
+              }
+            })(this)">
+              <div class="card-front">
+                <span class="slide-label">Analysis & synthesis</span>
+                <p style="font-size:0.75rem;">Summarization, cross-document comparison, trend identification, reporting. Turning data into decisions.</p>
+                <p style="font-size:0.65rem; opacity:0.7; margin-top:0.25rem; font-style:italic;">Click to connect to Session 2</p>
+              </div>
+              <div class="card-back" style="font-size:0.75rem;">
+                <span class="slide-label">Analysis & synthesis</span>
+                <p style="margin:0.25rem 0;">Session 2 brought this together: the <a href="slides-data-lakehouse.html#/15" target="_blank" style="color:#1a73e8; text-decoration:underline;">data lakehouse</a> organizes data for analysis, and <a href="slides-data-lakehouse.html#/1" target="_blank" style="color:#1a73e8; text-decoration:underline;">Data Crawler Carl</a> synthesizes across it.</p>
+                <p style="margin:0.25rem 0;">When AI summarizes or compares, <em>how do we know the synthesis is complete and accurate?</em></p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- EVALUATION (from workshop deck) -->
+        <section>
+          <p class="slide-kicker">Evaluation</p>
+          <h2>Can you trust the output?</h2>
+          <ul>
+            <li>Every lifecycle phase has different failure modes — extraction hallucinates fields, cleaning drops valid records, search misses relevant documents, synthesis fabricates trends</li>
+            <li>AI sounds confident even when wrong — your job is to verify at every phase</li>
+            <li>Check results against authoritative sources, not against what sounds right</li>
+            <li>Design verification strategies proportional to the stakes</li>
+          </ul>
+          <p class="slide-callout">
+            Human verification of every record doesn't scale.
+          </p>
+        </section>
+
+        <!-- WHERE HUMAN VERIFICATION BREAKS DOWN -->
+        <section>
+          <p class="slide-kicker">Why it doesn't scale</p>
+          <h2>Where human verification breaks down</h2>
+          <p class="slide-note">Three shapes the bottleneck takes in real research-analytics workflows, plus an open slot for the room. Different axes, same conclusion.</p>
+          <div class="slide-grid">
+            <article class="slide-card accent">
+              <span class="slide-label">Batch extraction at volume</span>
+              <p style="font-size:0.72rem;">An overnight pipeline runs <strong>thousands of documents</strong> through OCR, extraction, and classification. Every proposal, award letter, or subaward agreement produces dozens of structured fields. Reading each one before anyone acts is a full headcount's worth of work — that never catches up.</p>
+            </article>
+            <article class="slide-card accent">
+              <span class="slide-label">Autonomous agents on live data</span>
+              <p style="font-size:0.72rem;">Agents crawl the data lakehouse making <strong>thousands of classification, join, and lookup decisions per second</strong>. Each decision looks reasonable in isolation. Humans never see the intermediate steps — only the summary — so a subtle drift compounds invisibly across millions of ops before anyone notices.</p>
+            </article>
+            <article class="slide-card accent">
+              <span class="slide-label">Continuous compliance triage</span>
+              <p style="font-size:0.72rem;">Every COI disclosure, cost transfer, and effort variance is auto-routed into <strong>clear, escalate, or review</strong>. A silent rule drift — a prompt tweak, a schema change, a new sponsor edge case — can redirect hundreds of cases into the wrong bucket before audit season catches it.</p>
+            </article>
+            <article class="slide-card" style="border:1px dashed rgba(25,25,25,0.35); background:transparent;">
+              <span class="slide-label">Your turn</span>
+              <p style="font-size:0.72rem;">Where else at your institution does AI-assisted work outpace any reasonable human review? <strong>What's the fourth shape?</strong></p>
+              <p style="font-size:0.65rem; opacity:0.7; margin-top:0.4rem; font-style:italic;">Call them out — we'll add the best ones to the card.</p>
+            </article>
+          </div>
+          <p class="slide-callout">
+            So the job stops being "review every output" and starts being "design the verification pipeline" — sampling, automated consistency checks, and reproducibility tests, scaled to match the throughput.
+          </p>
+          <aside class="notes">
+            The previous slide ended on a declarative punchline: human verification doesn't scale. This slide gives that punchline a body.
+
+            Why three examples rather than one: each is a different axis of "doesn't scale."
+            - Batch extraction = throughput (volume over time, one-off outputs you never revisit).
+            - Agents = speed and opacity (humans can't even observe the intermediate steps at line rate).
+            - Compliance triage = drift (a continuous stream where the rule itself can silently shift).
+
+            All three are live in research-admin workflows today. You probably know staff who do one of these by hand now and are being asked to automate.
+
+            Closing move: pivot to the hands-on exercise. The next slide introduces the Vandalizer evaluation experiment — the concrete version of "design the verification pipeline" for extraction.
+          </aside>
+        </section>
+
+        <!-- VANDALIZER EVALUATION EXERCISE -->
+        <section>
+          <p class="slide-kicker">Hands-on exercise</p>
+          <h2>Defining and measuring accuracy</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <ul>
+                <li>In Session 1 we used the Vandalizer to extract structured data from documents — now we ask: <strong>how good was it?</strong></li>
+                <li>We'll define accuracy two ways:
+                  <ul>
+                    <li><strong>Ground truth comparison</strong> — measure extracted values against known correct answers</li>
+                    <li><strong>Replication</strong> — run the same extraction multiple times and measure consistency</li>
+                  </ul>
+                </li>
+                <li>These evaluation strategies can be applied to many types of analytics pipelines</li>
+              </ul>
+              <div class="slide-callout" style="margin-top:0.6rem;">
+                <a href="https://vandalizer.uidaho.edu" target="_blank" rel="noopener" style="color:var(--ink);">
+                  vandalizer.uidaho.edu
+                </a>
+              </div>
+            </div>
+            <div class="split-text" style="flex: 0 0 38%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">Try it with any tool</span>
+                <p style="font-size:0.7rem;">We'll use the Vandalizer today, but this experiment works with any AI tool — ChatGPT, Claude, Gemini, Copilot, or whatever your institution provides. The evaluation method is what matters, not the tool.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- OCR: THE CEILING ON EXTRACTION -->
+        <section>
+          <h2>Critical components that affect extraction</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <ul>
+                <li><strong>Optical character recognition (OCR) is your ceiling.</strong> If the PDF is scanned, extraction quality can never exceed OCR quality. Dedicated OCR engines and multimodal vision models handle layouts that basic text extraction misses.</li>
+                <li>Garbage in, garbage out — OCR errors propagate silently through every downstream step</li>
+                <li>This is a problem you solve <em>before</em> you choose an LLM</li>
+              </ul>
+              <div class="slide-callout" style="margin-top:0.6rem;">
+                <a href="https://ai4ra.uidaho.edu/digitizing-the-last-mile-ocr-in-research-administration/" target="_blank" rel="noopener" style="color:#1a73e8; text-decoration:underline;">
+                  Read more: Digitizing the Last Mile — OCR in Research Administration
+                </a>
+              </div>
+            </div>
+            <div class="split-text" style="flex: 0 0 40%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">What varies in OCR</span>
+                <ul style="font-size:0.7rem;">
+                  <li>Scan quality — resolution, skew, noise</li>
+                  <li>Document complexity — tables, multi-column layouts, handwriting</li>
+                  <li>Engine choice — traditional OCR vs. multimodal vision models</li>
+                  <li>A clean digital PDF sidesteps all of this — but not every document is digital</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- THE DATA MODEL AS GUARDRAIL -->
+        <section>
+          <h2>The data model is your guardrail</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <ul>
+                <li>Building on <a href="slides-data-lakehouse.html#/7" target="_blank" style="color:#1a73e8; text-decoration:underline;">Session 2</a> — defining the expected schema before extraction means structural errors are caught automatically</li>
+                <li>If the model expects a date and gets a dollar amount, that's a flag, not a guess</li>
+                <li>Without a schema, the model invents its own structure — and it will be different every time</li>
+                <li><strong>Structured outputs.</strong> Some models support a mode that forces output to conform to a JSON schema. This eliminates parsing failures and guarantees the shape of extracted data matches your data model.</li>
+              </ul>
+            </div>
+            <div class="split-text" style="flex: 0 0 40%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">Schema as guardrail</span>
+                <ul style="font-size:0.7rem;">
+                  <li>Defines expected fields, types, and constraints</li>
+                  <li>Makes validation automatic — wrong types and missing fields surface immediately</li>
+                  <li>The UDM from Session 2 is exactly this kind of shared schema</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONSISTENCY THROUGH REPLICATION -->
+        <section>
+          <p class="slide-kicker">Extraction reproducibility</p>
+          <h2>Consistency through replication</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <ul>
+                <li>Recall the <a href="slides-ai-literacy.html#/8" target="_blank" style="color:#1a73e8; text-decoration:underline;">token-by-token demo from Session 1</a> — LLMs sample from a probability distribution, so the same prompt can produce different output each time. Replication is how we make that variability visible.</li>
+                <li><strong>Multiple-pass consensus.</strong> Run the same extraction multiple times and compare results. Agreement across replicates increases confidence; disagreement flags items for human review.</li>
+                <li><strong>Borrow from bench science.</strong> Replication is how researchers separate signal from noise — and it works the same way here. If three runs converge on the same answer, that's evidence. If they don't, you've identified an item that needs scrutiny.</li>
+              </ul>
+            </div>
+            <div class="split-text" style="flex: 0 0 40%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">What replication tells you</span>
+                <ul style="font-size:0.7rem;">
+                  <li>If three passes agree on a deadline, trust it</li>
+                  <li>If three passes disagree on a budget figure, route it for human review</li>
+                  <li>Consistency across replicates is a direct measure of reproducibility</li>
+                  <li>Three runs is the floor for a meaningful signal. Scale up when the stakes are higher.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- THE EXPERIMENT -->
+        <section>
+          <p class="slide-kicker">The experiment</p>
+          <h2>Measuring what matters</h2>
+          <p class="slide-note">Vary one thing at a time and measure the effect — just like bench science. <em>Click each card to see how to control it in the Vandalizer.</em></p>
+          <div class="slide-grid">
+            <article class="slide-card dark experiment-card" onclick="openLightbox('img/vandalizer/vandalizer-ocr.png', 'OCR quality', 'Extract from a clean digital PDF, then from a scanned version of the same document. Compare the results.')">
+              <span class="slide-label">1. OCR quality</span>
+              <p style="font-size:0.7rem;">Extract from a clean digital PDF, then from a scanned version of the same document. Compare the results. How much accuracy did you lose?</p>
+              <p style="font-size:0.6rem; opacity:0.6; margin-top:0.25rem; font-style:italic;">Click for setup</p>
+            </article>
+            <article class="slide-card dark experiment-card" onclick="openLightbox('img/vandalizer/vandalizer-schema.png', 'Model comparison', 'Run the same extraction with different LLMs. Do they agree? Where do they diverge?')">
+              <span class="slide-label">2. Model comparison</span>
+              <p style="font-size:0.7rem;">Run the same extraction with different LLMs. Do they agree? Where do they diverge? Does a bigger model always win?</p>
+              <p style="font-size:0.6rem; opacity:0.6; margin-top:0.25rem; font-style:italic;">Click for setup</p>
+            </article>
+            <article class="slide-card dark experiment-card" onclick="openLightbox('img/vandalizer/vandalizer-schema.png', 'Structured outputs', 'Run with and without JSON schema enforcement. Does constraining the output shape reduce errors or introduce new ones?')">
+              <span class="slide-label">3. Structured outputs</span>
+              <p style="font-size:0.7rem;">Run with and without JSON schema enforcement. Does constraining the output shape reduce errors or introduce new ones?</p>
+              <p style="font-size:0.6rem; opacity:0.6; margin-top:0.25rem; font-style:italic;">Click for setup</p>
+            </article>
+            <article class="slide-card dark experiment-card" onclick="openLightbox('img/vandalizer/vandalizer-schema.png', 'Replicate consensus', 'Run the same extraction 3 times. Where do replicates agree? Where do they disagree?')">
+              <span class="slide-label">4. Replicate consensus</span>
+              <p style="font-size:0.7rem;">Run the same extraction 3 times. Where do replicates agree? Where do they disagree? Consensus across replicates is a direct measure of reproducibility.</p>
+              <p style="font-size:0.6rem; opacity:0.6; margin-top:0.25rem; font-style:italic;">Click for setup</p>
+            </article>
+          </div>
+          <p class="slide-note" style="margin-top:0.6rem; font-size:0.72rem;">
+            Each exercise gives you a menu of synthetic documents and a canonical extraction prompt. Pick a document, hold it constant across steps, and isolate the one variable for that exercise. The next four slides provide the materials and directions.
+          </p>
+        </section>
+
+        <!-- EXERCISE 1 SETUP: OCR QUALITY IS A TOOL PROPERTY -->
+        <section>
+          <p class="slide-kicker">Exercise 1 setup</p>
+          <h2>OCR quality is a property of the tool</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <p style="font-size:0.75rem; margin:0 0 0.4rem;"><strong>Question.</strong> "Works for me" in one tool is not an argument that OCR is solved. How far does the same scanned document travel depending on which pipeline touches it first?</p>
+              <ol style="font-size:0.72rem; padding-left:1.1rem;">
+                <li>Pick one of the <strong>tier 3</strong> PDFs. Run it through the Vandalizer with the extraction prompt and schema. Notice how much dotsocr recovers.</li>
+                <li>Now take the same PDF to a tool you'd actually use day to day: paste or upload it to ChatGPT, Claude, Copilot, a generic "PDF to text" converter, or the text-only extract from your browser.</li>
+                <li>Score each tool's output against the ground truth JSON. Mark missing, garbled, and silently collapsed fields.</li>
+                <li>The budget table and the stamped/highlighted header are the usual breaking points. Predict which tool will cope before you run it.</li>
+              </ol>
+            </div>
+            <div class="split-text" style="flex: 0 0 42%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">Materials</span>
+                <p style="font-size:0.62rem; margin:0.25rem 0 0.15rem; opacity:0.75;">Documents (synthetic; pick any)</p>
+                <ul style="font-size:0.64rem; margin:0 0 0.35rem; padding-left:0.95rem; line-height:1.35;">
+                  <li>NSF Award OAC-2415678 · <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>NIH NoA 1R01AI248002 · <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>Subaward SUB-24-001 · <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                </ul>
+                <p style="font-size:0.62rem; margin:0.15rem 0 0.15rem; opacity:0.75;">Ground truth and prompt</p>
+                <ul style="font-size:0.64rem; margin:0; padding-left:0.95rem; line-height:1.35;">
+                  <li><a href="files/workshop_ocr/ground_truth_workshop_ocr.json" target="_blank">ground_truth_workshop_ocr.json</a></li>
+                  <li><a href="files/prompts/nsf-award-notice-extraction/prompt.md" target="_blank">prompt.md</a> / <a href="files/prompts/nsf-award-notice-extraction/schema.json" target="_blank">schema.json</a></li>
+                </ul>
+                <p style="font-size:0.57rem; margin:0.4rem 0 0; opacity:0.55;">Prompt is tuned for NSF Award Notices; using it on NIH NoA or subaward is itself a test of how it generalizes. Source: <a href="https://github.com/AI4RA/prompt-library" target="_blank" style="color:inherit;">AI4RA/prompt-library</a></p>
+              </div>
+            </div>
+          </div>
+          <p class="slide-callout">
+            OCR is a tool-level property, not something the model handles for you. Know which of your tools have a dedicated OCR stage and which silently pass through whatever text they can reach.
+          </p>
+        </section>
+
+        <!-- EXERCISE 2 SETUP: CROSS-TOOL COMPARISON -->
+        <section>
+          <p class="slide-kicker">Exercise 2 setup</p>
+          <h2>Cross-tool comparison: where do they diverge?</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <p style="font-size:0.75rem; margin:0 0 0.4rem;"><strong>Question.</strong> Same prompt, same document, different AI tools in different browser tabs. Where do they agree, and where does disagreement flag fields that need review?</p>
+              <ol style="font-size:0.72rem; padding-left:1.1rem;">
+                <li>Pick two or three AI tools you actually use: ChatGPT, Claude, Copilot, Gemini, Vandalizer, a local model. Open each in its own tab.</li>
+                <li>Paste the canonical extraction prompt (prompt.md) into each tool. Upload the <strong>clean</strong> PDF. Clean input isolates the tool variable so OCR is not in the mix.</li>
+                <li>Save every tool's JSON output. Score each against the ground truth field by field.</li>
+                <li>Build a per-tool agreement matrix. Fields where every tool agrees are cheap to trust. Fields where tools diverge are where human review earns its keep.</li>
+              </ol>
+            </div>
+            <div class="split-text" style="flex: 0 0 42%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">Materials</span>
+                <p style="font-size:0.62rem; margin:0.25rem 0 0.15rem; opacity:0.75;">Documents (synthetic; pick any)</p>
+                <ul style="font-size:0.64rem; margin:0 0 0.35rem; padding-left:0.95rem; line-height:1.35;">
+                  <li>NSF Award OAC-2415678 · <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>NIH NoA 1R01AI248002 · <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>Subaward SUB-24-001 · <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                </ul>
+                <p style="font-size:0.62rem; margin:0.15rem 0 0.15rem; opacity:0.75;">Ground truth and prompt</p>
+                <ul style="font-size:0.64rem; margin:0; padding-left:0.95rem; line-height:1.35;">
+                  <li><a href="files/workshop_ocr/ground_truth_workshop_ocr.json" target="_blank">ground_truth_workshop_ocr.json</a></li>
+                  <li><a href="files/prompts/nsf-award-notice-extraction/prompt.md" target="_blank">prompt.md</a> / <a href="files/prompts/nsf-award-notice-extraction/schema.json" target="_blank">schema.json</a></li>
+                </ul>
+                <p style="font-size:0.57rem; margin:0.4rem 0 0; opacity:0.55;">The prompt is deliberately LLM-agnostic so it runs in any tool. Source: <a href="https://github.com/AI4RA/prompt-library" target="_blank" style="color:inherit;">AI4RA/prompt-library</a></p>
+              </div>
+            </div>
+          </div>
+          <p class="slide-callout">
+            Bigger is not always better. The disagreement pattern across tools is itself a verification signal. If every tool agrees on a field, trust it. If they split, look.
+          </p>
+        </section>
+
+        <!-- EXERCISE 3 SETUP: STRUCTURED OUTPUTS -->
+        <section>
+          <p class="slide-kicker">Exercise 3 setup</p>
+          <h2>Structured outputs: does the schema help?</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <p style="font-size:0.75rem; margin:0 0 0.4rem;"><strong>Question.</strong> Does constraining the output to a JSON schema reduce errors, or does it introduce new failure modes like silent null-filling?</p>
+              <ol style="font-size:0.72rem; padding-left:1.1rem;">
+                <li>Run the extraction prompt on the <strong>clean</strong> PDF in the Vandalizer with schema enforcement <strong>on</strong> (structured output mode).</li>
+                <li>Run the same prompt and PDF with schema enforcement <strong>off</strong>. Ask for JSON in the prompt but don't constrain it.</li>
+                <li>Parse both outputs. Record parse successes, field completeness, and any fields the model silently filled or skipped.</li>
+                <li>Score against the ground truth. Separate "parse failure" from "wrong value" in your tally, they are different failure modes.</li>
+              </ol>
+            </div>
+            <div class="split-text" style="flex: 0 0 42%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">Materials</span>
+                <p style="font-size:0.62rem; margin:0.25rem 0 0.15rem; opacity:0.75;">Documents (synthetic; pick any)</p>
+                <ul style="font-size:0.64rem; margin:0 0 0.35rem; padding-left:0.95rem; line-height:1.35;">
+                  <li>NSF Award OAC-2415678 · <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>NIH NoA 1R01AI248002 · <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>Subaward SUB-24-001 · <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                </ul>
+                <p style="font-size:0.62rem; margin:0.15rem 0 0.15rem; opacity:0.75;">Ground truth and prompt</p>
+                <ul style="font-size:0.64rem; margin:0; padding-left:0.95rem; line-height:1.35;">
+                  <li><a href="files/workshop_ocr/ground_truth_workshop_ocr.json" target="_blank">ground_truth_workshop_ocr.json</a></li>
+                  <li><a href="files/prompts/nsf-award-notice-extraction/prompt.md" target="_blank">prompt.md</a> / <a href="files/prompts/nsf-award-notice-extraction/schema.json" target="_blank">schema.json</a></li>
+                </ul>
+                <p style="font-size:0.57rem; margin:0.4rem 0 0; opacity:0.55;">Prompt source: <a href="https://github.com/AI4RA/prompt-library" target="_blank" style="color:inherit;">AI4RA/prompt-library</a></p>
+              </div>
+            </div>
+          </div>
+          <p class="slide-callout">
+            Schemas buy you valid parses. They also make null-filling look confident. Separate "did it parse?" from "is the value right?" in your measurements.
+          </p>
+        </section>
+
+        <!-- EXERCISE 4 SETUP: REPLICATE CONSENSUS -->
+        <section>
+          <p class="slide-kicker">Exercise 4 setup</p>
+          <h2>Replicate consensus: what is reproducible?</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <p style="font-size:0.75rem; margin:0 0 0.4rem;"><strong>Question.</strong> Same prompt, same document, same model, three runs. Which fields land on the same answer every time, and which shift between runs?</p>
+              <ol style="font-size:0.72rem; padding-left:1.1rem;">
+                <li>In the Vandalizer, lock the model, prompt, and schema. Run the extraction three times on the <strong>tier 3</strong> PDF. Clean PDF works too if the room is tight on time; tier 3 just exposes more variance.</li>
+                <li>Collect all three JSON outputs.</li>
+                <li>Compare field by field across the three runs. Mark each field as concordant (all three match) or discordant.</li>
+                <li>Score the concordant set against ground truth. Route the discordant set to human review.</li>
+              </ol>
+            </div>
+            <div class="split-text" style="flex: 0 0 42%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">Materials</span>
+                <p style="font-size:0.62rem; margin:0.25rem 0 0.15rem; opacity:0.75;">Documents (synthetic; pick any)</p>
+                <ul style="font-size:0.64rem; margin:0 0 0.35rem; padding-left:0.95rem; line-height:1.35;">
+                  <li>NSF Award OAC-2415678 · <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nsf_award_notice_OAC-2415678_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>NIH NoA 1R01AI248002 · <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/nih_notice_of_award_1R01AI248002-01_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                  <li>Subaward SUB-24-001 · <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_clean.pdf" target="_blank">clean</a> / <a href="files/workshop_ocr/subaward_agreement_SUB-24-001_tier3_authentic.pdf" target="_blank">tier 3</a></li>
+                </ul>
+                <p style="font-size:0.62rem; margin:0.15rem 0 0.15rem; opacity:0.75;">Ground truth and prompt</p>
+                <ul style="font-size:0.64rem; margin:0; padding-left:0.95rem; line-height:1.35;">
+                  <li><a href="files/workshop_ocr/ground_truth_workshop_ocr.json" target="_blank">ground_truth_workshop_ocr.json</a></li>
+                  <li><a href="files/prompts/nsf-award-notice-extraction/prompt.md" target="_blank">prompt.md</a> / <a href="files/prompts/nsf-award-notice-extraction/schema.json" target="_blank">schema.json</a></li>
+                </ul>
+                <p style="font-size:0.57rem; margin:0.4rem 0 0; opacity:0.55;">Prompt source: <a href="https://github.com/AI4RA/prompt-library" target="_blank" style="color:inherit;">AI4RA/prompt-library</a></p>
+              </div>
+            </div>
+          </div>
+          <p class="slide-callout">
+            Concordance is cheap confidence. Discordance is your routing rule for human review. Three runs is the floor for a meaningful signal.
+          </p>
+        </section>
+
+        <!-- AUDITABILITY & PROVENANCE: RFP EXERCISE -->
+        <section>
+          <p class="slide-kicker">Auditability and provenance</p>
+          <h2>Where did this answer come from?</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <ul>
+                <li>Accuracy is one half of trust. <strong>Provenance</strong> is the other — for every extracted value, can we point back to where it came from in the source document?</li>
+                <li>Our next Vandalizer workflow extracts structured requirements from a real NSF solicitation and populates a data model — deadlines, eligibility, page limits, special conditions, budget rules</li>
+                <li>This solicitation was chosen on purpose: it has a lot of <em>special requirements</em> that are easy to miss and easy to misread</li>
+                <li>Before we run the extraction, take a few minutes to skim the solicitation yourself. Notice what would be tedious to catalog by hand.</li>
+              </ul>
+              <div class="slide-callout" style="margin-top:0.6rem;">
+                <a href="https://www.nsf.gov/funding/opportunities/pcl-test-bed-test-bed-toward-network-programmable-cloud-laboratories/nsf25-541/solicitation" target="_blank" rel="noopener" style="color:#1a73e8; text-decoration:underline;">
+                  NSF 25-541 — PCL Test-Bed solicitation
+                </a>
+              </div>
+              <p style="font-size:0.7rem; margin-top:0.6rem;">
+                <em>And yes — to get the PDF, NSF tells you to print the page to PDF in your browser. <a href="#" onclick="openLightbox('img/vandalizer/nsf-print-to-pdf.png', 'How NSF wants you to get the PDF', 'The official instructions: open the page, then print it to PDF yourself. This is the friction we are extracting through.'); return false;" style="color:#1a73e8; text-decoration:underline;">Yes, really.</a></em>
+              </p>
+            </div>
+            <div class="split-text" style="flex: 0 0 38%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">What to look for</span>
+                <ul style="font-size:0.7rem;">
+                  <li>Eligibility constraints and PI requirements</li>
+                  <li>Submission deadlines and required components</li>
+                  <li>Page and format limits</li>
+                  <li>Special conditions and unusual requirements</li>
+                  <li>Budget rules, cost-share, and indirect cost guidance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="slide-card dark" style="margin-top:0.6rem; padding:0.55rem 0.9rem;">
+            <div style="display:flex; gap:1.2rem; font-size:0.65rem; flex-wrap:wrap;">
+              <div style="flex:1; min-width:150px;">
+                <span class="slide-label" style="font-size:0.55rem;">Prompt — checklist</span>
+                <div style="margin-top:0.2rem;"><a href="files/prompts/rfp-extraction/prompt-checklist.md" target="_blank">prompt-checklist.md</a></div>
+              </div>
+              <div style="flex:1; min-width:150px;">
+                <span class="slide-label" style="font-size:0.55rem;">Prompt — structured JSON</span>
+                <div style="margin-top:0.2rem;"><a href="files/prompts/rfp-extraction/prompt-structured.md" target="_blank">prompt-structured.md</a> · <a href="files/prompts/rfp-extraction/schema.json" target="_blank">schema.json</a></div>
+              </div>
+              <div style="flex:1; min-width:150px;">
+                <span class="slide-label" style="font-size:0.55rem;">Validated output — NSF 26-508</span>
+                <div style="margin-top:0.2rem;"><a href="files/prompts/rfp-extraction/NSF_26-508_expected.md" target="_blank">expected.md</a> · <a href="files/prompts/rfp-extraction/NSF_26-508_expected.json" target="_blank">expected.json</a></div>
+              </div>
+            </div>
+            <p style="font-size:0.57rem; margin:0.5rem 0 0; opacity:0.6;">
+              Prompts and validated case from the public <a href="https://github.com/AI4RA/prompt-library" target="_blank" style="color:inherit;">AI4RA/prompt-library</a>. NSF 26-508 (TechAccess) is a separate validated eval case that lets you preview what the extractor produces before we run it live on NSF 25-541.
+            </p>
+          </div>
+        </section>
+
+        <!-- CONTEXT FOR TRUST -->
+        <section>
+          <p class="slide-kicker">Before you send it</p>
+          <h2>What context makes a summary safer?</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <ul>
+                <li>Define the reporting period and metric rules so the model does not invent them.</li>
+                <li>Give the model the actual source table or query output, not a vague request for a narrative.</li>
+                <li>Use a template that separates directly supported facts from interpretation.</li>
+                <li>Keep a human review step for attribution, causality, anomalies, and edge cases.</li>
+              </ul>
+            </div>
+            <div class="split-text" style="flex: 0 0 40%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">What context should do</span>
+                <ul style="font-size:0.7rem;">
+                  <li>Reduce ambiguity about definitions</li>
+                  <li>Expose the source behind each number</li>
+                  <li>Make each claim easier to check</li>
+                  <li>Set clear escalation boundaries</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DECISION RULE -->
+        <section>
+          <p class="slide-kicker">Decision rule</p>
+          <h2>Use the thinnest context that preserves traceability</h2>
+          <ul>
+            <li>If a claim is directly visible in a trusted table, AI can help draft the wording.</li>
+            <li>If a claim depends on joins, business rules, or interpretation, show the sources and keep a human in the loop.</li>
+            <li>If a claim cannot be traced to a source, it is not ready to send.</li>
+            <li>Context is useful only when it makes the output more defensible.</li>
+          </ul>
+          <p class="slide-callout">
+            That is the test in the next exercise: which claims survive once
+            you ask for evidence?
+          </p>
+        </section>
+
+        <!-- FINAL ANALYTICS DEMO -->
+        <section>
+          <p class="slide-kicker">Final demo</p>
+          <h2>Can you defend this number?</h2>
+          <div class="slide-split">
+            <div class="split-text">
+              <div class="slide-card" style="margin-top:0;">
+                <span class="slide-label">Mini reporting table</span>
+                <p style="font-size:0.68rem; margin:0.3rem 0 0.55rem;">
+                  Prompt: "Write a 3-sentence leadership summary from this
+                  table."
+                </p>
+                <table style="width:100%; border-collapse:collapse; font-size:0.68rem;">
+                  <thead>
+                    <tr>
+                      <th style="text-align:left; border-bottom:1px solid rgba(25,25,25,0.18); padding:0.35rem 0.35rem 0.35rem 0;">Metric</th>
+                      <th style="text-align:right; border-bottom:1px solid rgba(25,25,25,0.18); padding:0.35rem;">FY2024</th>
+                      <th style="text-align:right; border-bottom:1px solid rgba(25,25,25,0.18); padding:0.35rem 0;">FY2025</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding:0.35rem 0.35rem 0.35rem 0; border-bottom:1px solid rgba(25,25,25,0.08);">Proposals submitted</td>
+                      <td style="text-align:right; padding:0.35rem; border-bottom:1px solid rgba(25,25,25,0.08);">11</td>
+                      <td style="text-align:right; padding:0.35rem 0; border-bottom:1px solid rgba(25,25,25,0.08);">6</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:0.35rem 0.35rem 0.35rem 0; border-bottom:1px solid rgba(25,25,25,0.08);">Awards received</td>
+                      <td style="text-align:right; padding:0.35rem; border-bottom:1px solid rgba(25,25,25,0.08);">1</td>
+                      <td style="text-align:right; padding:0.35rem 0; border-bottom:1px solid rgba(25,25,25,0.08);">9</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:0.35rem 0.35rem 0.35rem 0; border-bottom:1px solid rgba(25,25,25,0.08);">Award dollars obligated</td>
+                      <td style="text-align:right; padding:0.35rem; border-bottom:1px solid rgba(25,25,25,0.08);">$825K</td>
+                      <td style="text-align:right; padding:0.35rem 0; border-bottom:1px solid rgba(25,25,25,0.08);">$5.45M</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:0.35rem 0.35rem 0.35rem 0;">Publications linked to awards</td>
+                      <td style="text-align:right; padding:0.35rem;">7</td>
+                      <td style="text-align:right; padding:0.35rem 0;">13</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style="font-size:0.55rem; color:rgba(25,25,25,0.55); margin:0.45rem 0 0; line-height:1.3;">
+                  Source: AI4RA synthetic sponsored-research corpus. Every cell traces to a field in <code style="font-size:0.55rem;">records/proposals.json</code>, <code style="font-size:0.55rem;">awards.json</code>, or <code style="font-size:0.55rem;">publications.json</code>.
+                </p>
+              </div>
+            </div>
+            <div class="split-text" style="flex: 0 0 46%;">
+              <div class="slide-card dark" style="margin-top:0;">
+                <span class="slide-label">Audience prompt</span>
+                <p style="font-size:0.7rem; margin-top:0.3rem;">
+                  Which claims would you feel safe sending to leadership right
+                  now?
+                </p>
+                <ol style="font-size:0.68rem; margin:0.45rem 0 0; padding-left:1.1rem;">
+                  <li style="margin-bottom:0.4rem;">
+                    Award dollars obligated grew more than six-fold, from $825K to $5.45M.
+                    <span class="fragment" style="display:block; color:#9be564; margin-top:0.12rem;">Supported: both values are visible in the table.</span>
+                  </li>
+                  <li style="margin-bottom:0.4rem;">
+                    Publications linked to awards rose from 7 to 13.
+                    <span class="fragment" style="display:block; color:#9be564; margin-top:0.12rem;">Supported: both values are visible in the table.</span>
+                  </li>
+                  <li style="margin-bottom:0.4rem;">
+                    A growing proposal pipeline drove the surge in awards.
+                    <span class="fragment" style="display:block; color:#ff9e80; margin-top:0.12rem;">Contradicted: proposals submitted actually fell from 11 to 6. Awards lag submissions by a review cycle.</span>
+                  </li>
+                  <li>
+                    Industry sponsors powered most of the growth.
+                    <span class="fragment" style="display:block; color:#ffd54f; margin-top:0.12rem;">No provenance: the aggregate hides sponsor mix. Answer lives in <code style="font-size:0.6rem;">awards.json · sponsor_code</code>, not the summary.</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <p class="slide-callout fragment">
+            Only claims 1 and 2 are defensible from the visible evidence. The
+            rest need either correction or additional source traceability.
+          </p>
+          <aside class="notes">
+            Five-minute run:
+            1. Say: "Pretend this is the last slide before a leadership update and AI drafted the narrative for you."
+            2. Ask the room to vote, by hand, on which claims they would send as written.
+            3. Reveal the fragments one by one and make them justify their choices from the visible evidence.
+            4. Ask what evidence they would need before approving claims 3 and 4.
+            5. Bridge to the next slide: if a human still needs to validate and defend the summary, that is augment. If you cannot trace the claim at all, leave it alone.
+
+            Provenance note: every cell on this table is derived from the AI4RA synthetic sponsored-research corpus. If a participant presses on a number, you can literally open the JSON: proposals submitted come from proposals.json (counting submission_deadline by FY), awards received and award dollars come from awards.json (award_received_date, total_obligated), publications linked come from publications.json (year, award_ids). That is what defensibility looks like in practice: a reporter can trace every figure to a field in a file.
+
+            Claim 4 callback: the corpus DOES contain an industry sponsor (Pharmakom SRA with Meyer), but it is one award out of nine in FY25. So "industry drove growth" is not just unprovable from the aggregate, it is wrong once you drop into sponsor_code. Good moment to point out that AI summaries often sound plausible AND are defeated by a single query against the source.
+          </aside>
+        </section>
+
+        <!-- DECISION FRAMEWORK (from workshop deck) -->
+        <section>
+          <p class="slide-kicker">Decision framework</p>
+          <h2>Adoption and institutional fit</h2>
+          <ul>
+            <li><strong>Automate:</strong> repetitive, low-stakes, output-driven tasks with clear validation</li>
+            <li><strong>Augment:</strong> human-in-the-loop tasks where AI prepares and humans decide</li>
+            <li><strong>Leave alone:</strong> process-critical work that requires full auditability</li>
+          </ul>
+          <aside class="notes">
+            Callback: Remember Sequita the squirrel from Promptulus? Her domain is auditability — that's the question running underneath this entire framework. Can you audit the workflow? If yes, you can automate or augment it. If not, it stays in the "leave alone" zone until you can. The data lakehouse module showed you what trustworthy data infrastructure looks like; now Sequita's question is your litmus test for every workflow you take home.
+          </aside>
+        </section>
+
+        <!-- DISCUSSION (from workshop deck + existing module) -->
+        <section>
+          <p class="slide-kicker">Discussion</p>
+          <h2>What do you need at your institution?</h2>
+          <ul>
+            <li>Which dashboard claims at your institution would you send to leadership without manual checking?</li>
+            <li>What counts as ground truth in one of your real analytics workflows?</li>
+            <li>Where would reruns, sampling, or automated consistency checks add confidence?</li>
+            <li>Which outputs need source traceability before staff can act on them?</li>
+            <li>Which tasks are best framed as automate, augment, or leave alone?</li>
+          </ul>
+        </section>
+
+        <!-- STAYING CURRENT -->
+        <section>
+          <p class="slide-kicker">Continuous learning</p>
+          <h2>This landscape changes monthly</h2>
+          <ul>
+            <li>Today's best practices may be outdated by next quarter — build a habit, not just a checklist</li>
+            <li>Sponsor AI policies are updated with each funding cycle — check before every submission</li>
+            <li>New tools launch constantly — evaluate them against the governance criteria from Module 2</li>
+            <li>Your institution's AI policy is probably being rewritten right now — stay involved in that process</li>
+          </ul>
+          <div class="slide-grid" style="margin-top:0.5rem;">
+            <article class="slide-card">
+              <span class="slide-label">Trusted sources</span>
+              <ul style="font-size:0.7rem;">
+                <li><a href="https://www.educause.edu/" style="color:var(--gold);">EDUCAUSE</a> — Higher ed technology research and AI guidance</li>
+                <li><a href="https://www.ncura.edu/" style="color:var(--gold);">NCURA</a> — AI in research administration community</li>
+                <li><a href="https://grants.nih.gov/" style="color:var(--gold);">NIH Grants</a> and <a href="https://www.nsf.gov/policies/" style="color:var(--gold);">NSF Policy</a> — Sponsor AI guidance direct from the source</li>
+                <li><a href="https://ai4ra.uidaho.edu/" style="color:var(--gold);">ai4ra.uidaho.edu</a> — This project's ongoing work</li>
+              </ul>
+            </article>
+            <article class="slide-card accent">
+              <span class="slide-label">Monday morning</span>
+              <ul style="font-size:0.7rem;">
+                <li>Pick one analytics claim you're about to send to leadership. Write down the source rows or fields a skeptic would need to reach to prove it.</li>
+                <li>Pick one workflow currently owned by humans. Draft its verification plan: ground truth, sampling rate, trigger for full review.</li>
+                <li>Run the same extraction through two tools you use (<a href="https://vandalizer.uidaho.edu" style="color:var(--gold);">Vandalizer</a> + whatever you normally paste into). Compare where they disagree.</li>
+                <li>Take the "defend this number" exercise to your team. Pass around a dashboard screenshot, vote on which claims would survive a press-for-evidence.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- WRAP-UP -->
+        <section>
+          <p class="slide-kicker">3:50–4:00 PM</p>
+          <h1>Wrap-up and Q&A</h1>
+        </section>
+
+        <section>
+          <p class="slide-kicker">Workshop takeaway</p>
+          <h2>What to take home</h2>
+          <ul>
+            <li>The most important model is the data model</li>
+            <li>Reproducibility comes from organization, not from AI</li>
+            <li>AI is a tool, not an authority — someone must always own the decision</li>
+            <li>Start with the thinnest layer that solves the problem reliably</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="slide-kicker">Resources</p>
+          <h2>Keep going</h2>
+          <img class="slide-qr" src="https://ai4ra.uidaho.edu/wp-content/uploads/2025/12/ai4raQR.jpg" alt="Scan to visit ai4ra.uidaho.edu" />
+          <ul>
+            <li>
+              <a href="https://vandalizer.uidaho.edu" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:underline;">Vandalizer</a>
+              — AI-powered document intelligence for research administration
+            </li>
+            <li>
+              <a href="https://nate-layman.github.io/promptulus/" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:underline;">Promptulus</a>
+              — Practice AI literacy skills
+            </li>
+            <li>
+              <a href="index.html" style="color:var(--gold); text-decoration:underline;">Workshop site</a>
+              — Course content, teaching modules, slide decks
+            </li>
+            <li>
+              <a href="https://ai4ra.uidaho.edu/when-can-ai-be-used-in-research-administration/" style="color:var(--gold); text-decoration:underline;">When Can AI Be Used in RA?</a>
+              — The three-zone decision framework
+            </li>
+            <li>
+              <a href="https://github.com/ui-insight/REACHWorkshop2026" style="color:var(--gold); text-decoration:underline;">Repository</a>
+              — All materials are open source
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox" onclick="closeLightbox(event)">
+      <div class="lightbox-content" onclick="event.stopPropagation()">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+        <h3 id="lightbox-title"></h3>
+        <img id="lightbox-img" src="" alt="" />
+        <p id="lightbox-caption"></p>
+      </div>
+    </div>
+    <style>
+      .experiment-card { cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+      .experiment-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+
+      #lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        animation: lightboxFade 0.25s ease;
+      }
+      #lightbox.open { display: flex; }
+      @keyframes lightboxFade { from { opacity: 0; } to { opacity: 1; } }
+
+      .lightbox-content {
+        background: #fff;
+        border-radius: 0.75rem;
+        max-width: 90vw;
+        max-height: 90vh;
+        padding: 1.5rem 1.75rem 1.25rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: auto;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      }
+      .lightbox-content h3 {
+        margin: 0 0 0.75rem;
+        font-size: 1.25rem;
+        color: #191919;
+      }
+      .lightbox-content img {
+        max-width: 100%;
+        max-height: 70vh;
+        height: auto;
+        border-radius: 0.4rem;
+        border: 1px solid rgba(25,25,25,0.12);
+        background: #f5f5f5;
+      }
+      .lightbox-content p {
+        margin: 0.85rem 0 0;
+        font-size: 0.9rem;
+        color: #444;
+        max-width: 60ch;
+        text-align: center;
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.75rem;
+        background: transparent;
+        border: none;
+        font-size: 1.75rem;
+        line-height: 1;
+        cursor: pointer;
+        color: #555;
+        padding: 0.25rem 0.5rem;
+      }
+      .lightbox-close:hover { color: #d71920; }
+    </style>
+    <script>
+      function openLightbox(src, title, caption) {
+        var box = document.getElementById('lightbox');
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox-img').alt = title;
+        document.getElementById('lightbox-title').textContent = title;
+        document.getElementById('lightbox-caption').textContent = caption || '';
+        box.classList.add('open');
+      }
+      function closeLightbox(event) {
+        if (event && event.target.id !== 'lightbox' && event.type !== 'click') return;
+        document.getElementById('lightbox').classList.remove('open');
+      }
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    </script>
+
+    <script type="module">
+      import { readKeyFromURL, installLinkInterceptor } from './js/key-manager.js';
+      readKeyFromURL();
+      installLinkInterceptor();
+    </script>
+    <script src="reveal/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        controls: true,
+        progress: true,
+        center: true,
+        slideNumber: true,
+        transition: "slide"
+      });
+    </script>
+  </body>
+</html>
