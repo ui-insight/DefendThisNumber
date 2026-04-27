@@ -6,6 +6,8 @@ Companion site for Barrie Robison's guest lecture in ENVS 5010 ("AI, Research, a
 
 Monday, April 27, 2026, 3:30 to 4:20 PM, CNR 10. Live in person, plus Zoom for distance students, plus a recording shared with the 8-week asynchronous cohort.
 
+**Live site**: https://ui-insight.github.io/DefendThisNumber/
+
 ## Thesis
 
 > Provenance is a discipline. If you cannot trace a claim back to its source, it is not ready to share.
@@ -20,15 +22,15 @@ The central argument is simple. AI accelerates the pipeline, but it does not cha
 
 ## Talk shape
 
-A tour of three demos, each making a distinct point about provenance.
+A tour of three demos, each showing one part of the verification chain.
 
-| # | Demo | Point |
-|---|------|-------|
-| 1 | PDF extraction failure modes | Garbage in, garbage out. AI extracts numbers from a real-looking grant document, and a subtle error changes meaning. |
-| 2 | Reproducibility and non-determinism | The same prompt run three times can yield three different answers. "The AI said so" is not a defensible citation. |
-| 3 | End-to-end provenance trace | A claim is a chain of custody. Show where AI inserts links you have to vouch for. |
+| # | Demo | What happens |
+|---|------|---|
+| 1 | Measuring extraction accuracy | Push an NSF solicitation through Vandalizer (the AI4RA team's document intelligence engine), then compare the extracted requirements against ground truth side by side. |
+| 2 | AI as a translation layer, plus reproducibility and consistency | A token-builder interactive shows why the same prompt can yield different output. Data Crawler Carl is offered as a tool the audience can try on their own data. Vandalizer is re-run live to demonstrate non-determinism on a real workflow. |
+| 3 | Auditability facilitates reproducibility | Tour of the AI4RA Prompt Library (versioned prompts) and Mindrouter (run execution and logging). The chain of custody made concrete. |
 
-Roughly 25 minutes of prepared remarks, then 25 to 30 minutes of facilitated discussion.
+13 slides total. Roughly 25 minutes of prepared remarks, then 25 to 30 minutes of facilitated discussion.
 
 ## Series context
 
@@ -46,43 +48,47 @@ Course anchor text: Yuval Harari, *Nexus* (2024), chapters 8 (Networks), 9 (Trut
 
 Elise Kokenge, CNR Director of Graduate Studies, University of Idaho.
 
-## Readings
+## Tools featured
+
+| Tool | Role |
+|------|------|
+| [Vandalizer](https://vandalizer.nkn.uidaho.edu/) | The AI4RA team's document intelligence engine. Featured in Demos 1 and 2. |
+| [Data Crawler Carl](https://ui-insight.github.io/data-crawler-carl/) | Tabular data question-answering tool. Offered to the audience in Demo 2. |
+| [AI4RA Prompt Library](https://github.com/AI4RA/prompt-library) | Versioned prompts and validated cases the team uses. Featured in Demo 3. |
+| [Mindrouter](https://mindrouter.uidaho.edu) | Prompt execution and provenance logging. Featured in Demo 3. |
+| [AI4RA](https://ai4ra.uidaho.edu) | The NSF-funded umbrella project at the University of Idaho. The community of practice this talk draws from. |
+
+## Reference reading
+
+Not hosted on the site, but informs the talk and the homework around it.
 
 1. Luke Sheneman, "Digitizing the Last Mile: OCR in Research Administration" (AI4RA). https://ai4ra.uidaho.edu/digitizing-the-last-mile-ocr-in-research-administration/
 2. Nate Layman, "When Can AI Be Used in Research Administration?" (AI4RA). https://ai4ra.uidaho.edu/when-can-ai-be-used-in-research-administration/
-3. To be added: one provenance and verification reading.
+3. Wilkinson, M. et al. (2016), "The FAIR Guiding Principles for scientific data management and stewardship." *Scientific Data* 3, 160018. https://doi.org/10.1038/sdata.2016.18
 
 ## Repo structure
 
 ```
 DefendThisNumber/
-  CLAUDE.md                Project instructions for Claude Code
-  README.md                This file
+  CLAUDE.md                 Project instructions for Claude Code
+  README.md                 This file
   LICENSE
-  docs/                    GitHub Pages source, the live site
-    index.html             Landing page (thesis, three-demo nav, links)
-    demo-extraction.html   Demo 1 deep page
-    demo-reproducibility.html Demo 2 deep page
-    demo-provenance.html   Demo 3 deep page
-    slides.html            Reveal.js deck for the talk
-    readings.html          Curated readings
-    about.html             Bio, series context, acknowledgements
-    files/                 Source PDFs and ground-truth artifacts for demos
-    img/                   Logos, presenter photos, diagrams
-    reveal/                Reveal.js library
-    styles.css             Site stylesheet
-    slides.css             Slide deck theme
-  resources/               Reference materials (not served)
-    ROADMAP.md             Build plan for this project
+  docs/                     GitHub Pages source, the live site
+    index.html              Landing page
+    slides.html             Reveal.js deck (13 slides)
+    slides-interactive.js   Token-builder and other interactive widgets
+    styles.css              Site stylesheet
+    slides.css              Slide deck theme
+    app.js                  Scroll animation observer
+    files/                  Source PDFs and ground-truth artifacts
+    img/                    Logos, presenter photos
+    reveal/                 Reveal.js library
+  resources/                Reference materials, not served
+    ROADMAP.md              Build plan for this project
+    slides-outline.md       Working outline behind the deck
 ```
 
-## Related work
-
-| Source | Relevance |
-|--------|-----------|
-| [REACHWorkshop2026](../REACHWorkshop2026) | Visual and structural template that this site adapts |
-| [ai4ra.uidaho.edu](https://ai4ra.uidaho.edu) | AI4RA community of practice blog (source of two readings) |
-| [ui-insight/lakehouse](https://github.com/ui-insight/lakehouse) | Open-source data lakehouse used in Demo 3 |
+The `docs/` folder also retains some unlinked legacy pages from the REACHWorkshop2026 fork (course-content, presenters, next-steps, the three original slide decks). These are not reachable from the new nav and are pending cleanup.
 
 ## Local preview
 
@@ -94,4 +100,4 @@ Then open `http://127.0.0.1:4173`.
 
 ## Deployment
 
-GitHub Pages, served from the `docs/` folder on the `main` branch. Configure in repo settings: Settings, then Pages, then Source, then `/docs`.
+GitHub Pages, served from the `docs/` folder on the `main` branch. Configured in repo settings: Settings, then Pages, then Source, then `main` / `/docs`. Pushes to `main` trigger an automatic rebuild in roughly 30 to 60 seconds.
