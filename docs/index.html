@@ -62,40 +62,23 @@
               <article class="hero-art">
                 <img src="img/logos/ai4ra-logo.png" alt="AI4RA mark" />
               </article>
-              <div class="stat-block">
-                <article class="stat-card">
-                  <strong>When</strong>
-                  <span>Monday, April 27, 2026, 3:30 to 4:20 PM</span>
-                </article>
-                <article class="stat-card">
-                  <strong>Where</strong>
-                  <span>CNR 10, plus Zoom, plus recording for the asynchronous cohort</span>
-                </article>
-                <article class="stat-card">
-                  <strong>Course</strong>
-                  <span>ENVS 5010, AI, Research, and the Professions</span>
-                </article>
-                <article class="stat-card">
-                  <strong>Series</strong>
-                  <span>Voice (Karl), Judgment (Baumgaertner), Trust (Robison)</span>
-                </article>
-              </div>
             </div>
           </div>
         </section>
 
         <section class="content-block reveal" id="demos">
           <p class="eyebrow">A tour of three demos</p>
-          <h2 class="section-heading section-heading-wide">Each demo makes one point about provenance. The throughline: if you cannot trace it, do not cite it.</h2>
+          <h2 class="section-heading section-heading-wide">If you cannot trace it, do not share it.</h2>
           <div class="path-grid">
             <article class="content-card path-card">
               <span class="tag">Demo 1</span>
-              <h3>PDF extraction failure modes</h3>
+              <h3>Measuring extraction accuracy</h3>
               <p>
-                Push a real-looking grant document through the AI4RA OCR and extraction pipeline.
-                Find a subtle error that changes meaning. The literal "defend this number" demo.
+                Push a real NSF solicitation through Vandalizer, the AI4RA team's document intelligence engine.
+                Compare the extracted requirements against ground truth, side by side. See exactly where AI is
+                right, where it goes sideways, and how much you would have to verify by hand.
               </p>
-              <p><em>Point: garbage in, garbage out. Fluency is not accuracy.</em></p>
+              <p><em>Method: ground-truth comparison. Lesson: trust the eval, not the output.</em></p>
               <div class="card-actions">
                 <a class="button" href="demo-extraction.html">Open Demo 1</a>
               </div>
@@ -129,14 +112,15 @@
 
         <section class="content-block reveal">
           <p class="eyebrow">From the AI4RA toolkit</p>
-          <h2 class="section-heading section-heading-wide">Three tools doing the work behind the demos.</h2>
+          <h2 class="section-heading section-heading-wide">AI resources behind the demos.</h2>
           <div class="path-grid">
             <article class="content-card path-card">
               <span class="tag">Vandalizer</span>
-              <h3>AI prompt workspace</h3>
+              <h3>Document intelligence engine</h3>
               <p>
-                A document-extraction sandbox where the AI4RA team builds, tests, and ships AI prompts.
-                Open a document, write a prompt, see what AI returns, iterate. Featured in Demos 1 and 2.
+                The AI4RA team's document intelligence engine. Open a PDF, write a prompt, get structured
+                output back. Compare the output against ground truth to measure how trustworthy it is.
+                Featured in Demos 1 and 2.
               </p>
               <div class="card-actions">
                 <a class="button" href="https://vandalizer.nkn.uidaho.edu/" target="_blank" rel="noopener">Open Vandalizer</a>
