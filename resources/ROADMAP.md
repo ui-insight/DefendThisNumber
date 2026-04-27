@@ -16,7 +16,7 @@ Companion site for Barrie Robison's guest lecture in ENVS 5010, "AI, Research, a
 
 ## Thesis
 
-> Provenance is the new literacy. If you cannot trace a claim back to its source, it is not ready to share.
+> Provenance is a discipline. If you cannot trace a claim back to its source, it is not ready to share.
 
 This sentence is the spine of everything. It is the hero copy on the landing page, the throughline for each of the three demos, and the closer on the slide deck.
 
@@ -127,7 +127,7 @@ You chose **full site by today, aggressive**. Honest read: with only slide conte
 | Audience | ENVS 5010 grad students, plus faculty observers and async working professionals |
 | Venue | CNR 10, in person, plus Zoom, plus recording |
 | Site role | Live demo platform AND durable artifact |
-| Thesis | "Provenance is the new literacy" |
+| Thesis | "Provenance is a discipline" |
 | Talk shape | Tour of three demos |
 | Three demos | PDF extraction failure modes, reproducibility, end-to-end provenance trace |
 | Site shape | Landing plus per-demo pages, ~7 to 8 pages |

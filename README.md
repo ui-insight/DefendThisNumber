@@ -8,7 +8,7 @@ Monday, April 27, 2026, 3:30 to 4:20 PM, CNR 10. Live in person, plus Zoom for d
 
 ## Thesis
 
-> Provenance is the new literacy. If you cannot trace a claim back to its source, it is not ready to share.
+> Provenance is a discipline. If you cannot trace a claim back to its source, it is not ready to share.
 
 ## Abstract
 

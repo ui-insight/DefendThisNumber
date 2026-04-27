@@ -10,7 +10,7 @@ This is the companion site for Barrie Robison's guest lecture in ENVS 5010 ("AI,
 - **Format**: ~25 minutes prepared remarks, then ~25 to 30 minutes of facilitated discussion
 - **Series context**: Third in a sequence following Jason Karl (Voice) and Bert Baumgaertner (Judgment). This talk takes Accountability and Trust.
 - **Course anchor text**: Yuval Harari, *Nexus* (2024), chapters 8 (Networks), 9 (Truth), and 10 (The Future).
-- **Thesis**: Provenance is the new literacy. If you cannot trace a claim back to its source, it is not ready to share.
+- **Thesis**: Provenance is a discipline. If you cannot trace a claim back to its source, it is not ready to share.
 
 The full build plan lives in [resources/ROADMAP.md](resources/ROADMAP.md).
 
