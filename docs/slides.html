@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f1b300" />
+    <title>Slides | Can You Defend This Number?</title>
+    <meta
+      name="description"
+      content="Slide deck for Barrie Robison's ENVS 5010 guest lecture: Truth, Verification, and Trust in AI-Assisted Research."
+    />
+    <link rel="stylesheet" href="reveal/dist/reveal.css" />
+    <link rel="stylesheet" href="reveal/dist/theme/white.css" />
+    <link rel="stylesheet" href="slides.css" />
+  </head>
+  <body class="slides-page">
+    <div class="slides-home">
+      <a href="index.html">Back to Home</a>
+    </div>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- 1. TITLE -->
+        <section class="title-slide" data-background-color="#f1b300">
+          <p class="slide-kicker slide-kicker-dark">ENVS 5010, April 27, 2026</p>
+          <h1>Can You Defend This Number?</h1>
+          <p class="slide-dark" style="font-size:1.1rem; margin-top:0.5rem;">Truth, Verification, and Trust in AI-Assisted Research</p>
+          <img src="img/presenters/barrie-robison.jpg" alt="Barrie Robison" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid #fff; margin:1rem auto 0;" />
+          <p class="slide-lede slide-dark">Barrie Robison</p>
+          <p class="slide-dark" style="font-size:0.85rem; margin-top:0.25rem;">Professor of Biological Sciences. Director, IIDS.<br/>Writer of Emails and Attender of Endless Meetings.</p>
+        </section>
+
+        <!-- 2. SERIES FIT -->
+        <section>
+          <p class="slide-kicker">ENVS 5010 series, third in a sequence</p>
+          <h2>Voice. Judgment. Trust.</h2>
+          <div class="slide-grid">
+            <article class="slide-card">
+              <p class="slide-kicker">Karl</p>
+              <h3>Voice</h3>
+              <p>Are you giving up the thing that is uniquely yours? AI in academic writing.</p>
+            </article>
+            <article class="slide-card">
+              <p class="slide-kicker">Baumgaertner</p>
+              <h3>Judgment</h3>
+              <p>The dark room and the ruthless curiosity it demands. Agentic AI in graduate research.</p>
+            </article>
+            <article class="slide-card accent">
+              <p class="slide-kicker">Robison, today</p>
+              <h3>Trust</h3>
+              <p>Truth, verification, and trust. Can you defend the claims AI helped you produce?</p>
+            </article>
+          </div>
+          <p class="slide-note">All three sit on top of Harari, <em>Nexus</em>, ch. 8 (Networks), 9 (Truth), and 10 (The Future).</p>
+        </section>
+
+        <!-- 3. HOOK: VANDALIZER + COST-SHARING FLIP -->
+        <section>
+          <p class="slide-kicker">A simple question to start</p>
+          <h2>I asked Vandalizer for the requirements out of NSF 26-508.</h2>
+          <div class="slide-grid">
+            <article class="slide-card">
+              <p class="slide-kicker">What Vandalizer told me</p>
+              <p style="font-size:1rem; line-height:1.5;">"Voluntary cost sharing of approximately 20% is <strong>encouraged</strong> and strengthens the proposal."</p>
+            </article>
+            <article class="slide-card accent">
+              <p class="slide-kicker">What the RFP actually says</p>
+              <p style="font-size:1rem; line-height:1.5;">Voluntary committed cost sharing is <strong>PROHIBITED</strong>.</p>
+              <p style="font-size:0.85rem; color:var(--muted); margin-top:0.5rem;">A proposal team following AI's advice would be returned without review.</p>
+            </article>
+          </div>
+          <p class="slide-note">Would you start writing your proposal off this list? Would you pass it to your PI?</p>
+        </section>
+
+        <!-- 4. THESIS -->
+        <section data-background-color="#f1b300">
+          <h1 class="slide-dark" style="font-size:3rem;">Provenance is the new literacy.</h1>
+          <p class="slide-dark" style="font-size:1.3rem; margin-top:1rem;">If you cannot trace a claim back to its source, it is not ready to share.</p>
+          <p class="slide-dark slide-note" style="margin-top:2rem;">The next 22 minutes: three demos that earn this claim.</p>
+        </section>
+
+        <!-- 5. TOUR PREVIEW -->
+        <section>
+          <p class="slide-kicker">Three demos</p>
+          <h2>Each one breaks a different link in the chain.</h2>
+          <div class="preview-flow" role="list" aria-label="Three demo overview">
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F4C4;</p>
+              <div class="preview-content">
+                <p class="preview-part-number">Demo 1</p>
+                <h6 class="preview-part-title">Defend this number</h6>
+              </div>
+              <p class="preview-time">~6 min</p>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F3B2;</p>
+              <div class="preview-content">
+                <p class="preview-part-number">Demo 2</p>
+                <h6 class="preview-part-title">Defend this answer</h6>
+              </div>
+              <p class="preview-time">~6 min</p>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F517;</p>
+              <div class="preview-content">
+                <p class="preview-part-number">Demo 3</p>
+                <h6 class="preview-part-title">Defend this chain</h6>
+              </div>
+              <p class="preview-time">~6 min</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 6. DEMO 1: VANDALIZER LINK + PDF DOWNLOAD -->
+        <section>
+          <p class="slide-kicker">Demo 1</p>
+          <h2>Defend this number.</h2>
+          <p class="slide-note" style="margin-bottom:1rem;">Open Vandalizer. Download the award notice. I will drive.</p>
+          <div class="slide-grid">
+            <article class="slide-card accent" style="text-align:center;">
+              <p class="slide-kicker">Step 1</p>
+              <img src="img/logos/vandalizer.png" alt="Vandalizer logo" style="height:60px; margin:0.5rem auto;" />
+              <h3>Open Vandalizer</h3>
+              <a href="https://vandalizer.nkn.uidaho.edu/" target="_blank" rel="noopener" style="display:inline-block; padding:0.5rem 1.5rem; border-radius:999px; background:var(--gold); color:var(--ink); font-weight:800; text-decoration:none; border:2px solid var(--ink); margin-top:0.5rem; font-size:0.95rem;">vandalizer.nkn.uidaho.edu &rarr;</a>
+            </article>
+            <article class="slide-card accent" style="text-align:center;">
+              <p class="slide-kicker">Step 2</p>
+              <p style="font-size:3rem; margin:0.25rem auto;" aria-hidden="true">&#x1F4C4;</p>
+              <h3>Download the award notice</h3>
+              <a href="files/nsf_award_notice_DEB-2412345.pdf" download="nsf_award_notice_DEB-2412345.pdf" style="display:inline-block; padding:0.5rem 1.5rem; border-radius:999px; background:var(--gold); color:var(--ink); font-weight:800; text-decoration:none; border:2px solid var(--ink); margin-top:0.5rem; font-size:0.9rem;">DEB-2412345.pdf &darr;</a>
+              <p style="font-size:0.8rem; color:var(--muted); margin-top:0.5rem;">Synthetic NSF DEB award for "Network ecology of <em>Fangornium sylvaticum</em>."</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 7. DEMO 1 DEBRIEF -->
+        <section>
+          <h2 style="font-size:2.5rem; line-height:1.3;">If you cannot trace the number, do not share the number.</h2>
+          <p class="slide-note" style="margin-top:2rem;">And it is not just numbers. The same prompt, run twice, can give you two different answers. Why?</p>
+        </section>
+
+        <!-- 8. TOKEN-BUILDER INTERACTIVE (ported from slides-ai-literacy.html) -->
+        <section>
+          <p class="slide-kicker">Demo 2 &middot; Defend this answer</p>
+          <h2>Build a sentence one token at a time</h2>
+          <p style="font-size:0.8rem; color:var(--muted);">Click the next word. Each choice shifts what comes next, just like an LLM.</p>
+          <div class="token-builder" id="token-builder"></div>
+          <p class="slide-note">No right answer, only probabilities. This is why LLMs produce different output each time.</p>
+        </section>
+
+        <!-- 9. DATA CRAWLER CARL -->
+        <section>
+          <p class="slide-kicker">Demo 2 &middot; Try it on your own data</p>
+          <h2>Data Crawler Carl</h2>
+          <div class="slide-grid single" style="max-width:36rem; margin:1rem auto 0;">
+            <article class="slide-card accent" style="text-align:center;">
+              <p style="font-size:3rem; margin:0;" aria-hidden="true">&#x1F40C;</p>
+              <h3>Upload a CSV. Ask in plain English. Watch what AI gets right and wrong.</h3>
+              <a href="https://ui-insight.github.io/data-crawler-carl/" target="_blank" rel="noopener" style="display:inline-block; padding:0.5rem 1.5rem; border-radius:999px; background:var(--gold); color:var(--ink); font-weight:800; text-decoration:none; border:2px solid var(--ink); margin-top:1rem;">Launch Data Crawler Carl &rarr;</a>
+              <p style="font-size:0.8rem; color:var(--muted); margin-top:0.5rem;">Built by the AI4RA team for exactly this kind of exploration.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- 10. BACK TO VANDALIZER (REPRODUCIBILITY) -->
+        <section>
+          <p class="slide-kicker">Demo 2 &middot; Same prompt, three runs</p>
+          <h2>Watch what Vandalizer gives me three times in a row.</h2>
+          <p class="slide-note">Switching back to Vandalizer.</p>
+          <div class="slide-grid single" style="max-width:36rem; margin:1rem auto 0;">
+            <article class="slide-card accent" style="text-align:center;">
+              <img src="img/logos/vandalizer.png" alt="Vandalizer logo" style="height:50px; margin:0.5rem auto;" />
+              <a href="https://vandalizer.nkn.uidaho.edu/" target="_blank" rel="noopener" style="display:inline-block; padding:0.5rem 1.5rem; border-radius:999px; background:var(--gold); color:var(--ink); font-weight:800; text-decoration:none; border:2px solid var(--ink); margin-top:0.5rem;">Open Vandalizer &rarr;</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- 11. DEMO 2 DEBRIEF -->
+        <section>
+          <h2 style="font-size:2.5rem; line-height:1.3;">The AI did not give you an answer. It gave you a sample.</h2>
+          <p class="slide-note" style="margin-top:2rem;">So how do you know which sample to trust? You need a record.</p>
+        </section>
+
+        <!-- 12. DEMO 3 SETUP: CHAIN DIAGRAM -->
+        <section>
+          <p class="slide-kicker">Demo 3 &middot; Defend this chain</p>
+          <h2>If AI is in your pipeline, it is in your chain of custody.</h2>
+          <div class="preview-flow" role="list" aria-label="Chain of custody">
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F4C4;</p>
+              <div class="preview-content">
+                <h6 class="preview-part-title">Source</h6>
+              </div>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F916;</p>
+              <div class="preview-content">
+                <h6 class="preview-part-title">AI extract</h6>
+              </div>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F4CA;</p>
+              <div class="preview-content">
+                <h6 class="preview-part-title">Aggregate</h6>
+              </div>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F4CB;</p>
+              <div class="preview-content">
+                <h6 class="preview-part-title">Report</h6>
+              </div>
+            </article>
+            <article class="preview-step" role="listitem">
+              <p class="preview-icon" aria-hidden="true">&#x1F4E3;</p>
+              <div class="preview-content">
+                <h6 class="preview-part-title">Claim</h6>
+              </div>
+            </article>
+          </div>
+          <p class="slide-note">Every step is a link you have to vouch for.</p>
+        </section>
+
+        <!-- 13. AI4RA PROMPT LIBRARY + MINDROUTER -->
+        <section>
+          <p class="slide-kicker">Demo 3 &middot; How we keep the receipts</p>
+          <h2>Prompts versioned. Runs logged. Evaluation tied to both.</h2>
+          <div class="slide-grid">
+            <article class="slide-card accent" style="text-align:center;">
+              <p class="slide-kicker">Prompts, versioned</p>
+              <p style="font-size:2.5rem; margin:0.25rem auto;" aria-hidden="true">&#x1F4DA;</p>
+              <h3>AI4RA Prompt Library</h3>
+              <p style="font-size:0.9rem;">Every prompt our team uses lives here, with version history.</p>
+              <a href="https://github.com/AI4RA/prompt-library" target="_blank" rel="noopener" style="display:inline-block; padding:0.5rem 1.25rem; border-radius:999px; background:var(--gold); color:var(--ink); font-weight:800; text-decoration:none; border:2px solid var(--ink); margin-top:0.5rem; font-size:0.85rem;">github.com/AI4RA/prompt-library &rarr;</a>
+            </article>
+            <article class="slide-card accent" style="text-align:center;">
+              <p class="slide-kicker">Runs, logged</p>
+              <p style="font-size:2.5rem; margin:0.25rem auto;" aria-hidden="true">&#x1F9ED;</p>
+              <h3>Mindrouter</h3>
+              <p style="font-size:0.9rem;">Every run, every output, every evaluation, traceable end to end.</p>
+              <a href="https://mindrouter.uidaho.edu" target="_blank" rel="noopener" style="display:inline-block; padding:0.5rem 1.25rem; border-radius:999px; background:var(--gold); color:var(--ink); font-weight:800; text-decoration:none; border:2px solid var(--ink); margin-top:0.5rem; font-size:0.85rem;">mindrouter.uidaho.edu &rarr;</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- 14. DEMO 3 DEBRIEF -->
+        <section>
+          <h2 style="font-size:2.3rem; line-height:1.3;">Provenance is not faith. It is a record you can show another person.</h2>
+          <p class="slide-note" style="margin-top:2rem;">Without the record, you have an opinion. With the record, you have a defense. (Harari, ch. 10.)</p>
+        </section>
+
+        <!-- 15. CLOSING + DISCUSSION SEED -->
+        <section data-background-color="#f1b300">
+          <h1 class="slide-dark" style="font-size:2.8rem;">Provenance is the new literacy.</h1>
+          <p class="slide-dark" style="font-size:1.15rem; margin-top:0.75rem;">Build the verification habit now, before AI use becomes a reflex you no longer notice.</p>
+          <div style="margin-top:1.25rem; padding:0.75rem 1rem; background:rgba(0,0,0,0.08); border-radius:8px; max-width:42rem; margin-left:auto; margin-right:auto;">
+            <p class="slide-dark" style="font-size:0.95rem; font-weight:700; margin:0;">Three zones to start with.</p>
+            <p class="slide-dark" style="font-size:0.9rem; margin:0.25rem 0 0;"><strong>Automate</strong> where the chain is short and verifiable. <strong>Augment</strong> where you stay in the loop. <strong>Leave alone</strong> where you cannot defend the output.</p>
+          </div>
+          <p class="slide-dark slide-note" style="margin-top:1.5rem; font-style:italic;">For discussion: what is one claim you have made this semester that you could not defend if I asked you to right now?</p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="reveal/dist/reveal.js"></script>
+    <script src="slides-interactive.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        controls: true,
+        progress: true,
+        center: true,
+        slideNumber: true,
+        transition: "slide"
+      });
+    </script>
+  </body>
+</html>
